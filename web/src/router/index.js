@@ -2,8 +2,17 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import routes from './routes'
+import VueRessource from 'vue-resource'
+import * as VueGoogleMaps from 'vue2-google-maps'
 
 Vue.use(VueRouter)
+Vue.use(VueRessource)
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyADsBFHd9NtZc145Jm-9T84pFY9exMtDkA',
+    libraries: 'places',
+  },
+})
 
 const Router = new VueRouter({
   /*

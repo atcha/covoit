@@ -83,7 +83,7 @@
       @click="$router.push('/proposer/ajout')"
       class="fixed"
       icon="add"
-      style="right: 18px; bottom: 68px"
+      style="right: 10px; bottom: 60px"
     />
   </q-page>
 </template>
@@ -93,11 +93,8 @@
     name: 'Trip',
     data() {
       return {
-        markers: [],
-        place: null,
       }
     },
-    description: 'Autocomplete Example (#164)',
     methods: {}
   }
 </script>

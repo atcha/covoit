@@ -3,6 +3,7 @@
     <h3 class="text-secondary">Rechercher un covoiturage autour de chez vous</h3>
     <q-list>
       <q-list-header>Votre recherche</q-list-header>
+      <q-item-separator/>
       <q-item class="search-form">
         <div tabindex="-1" class="q-if row no-wrap items-end relative-position q-input q-search text-primary">
           <i aria-hidden="true" class="q-icon q-if-control q-if-control-before material-icons">search</i>
@@ -33,15 +34,6 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import * as VueGoogleMaps from 'vue2-google-maps'
-
-  Vue.use(VueGoogleMaps, {
-    load: {
-      key: 'AIzaSyADsBFHd9NtZc145Jm-9T84pFY9exMtDkA',
-      libraries: 'places',
-    },
-  })
 
   export default {
     name: 'Search',

@@ -63,6 +63,7 @@ module.exports = function (ctx) {
         'QItemSide',
         'QItemTile',
         'QInput',
+        'QSearch',
         'QAutocomplete'
       ],
       directives: [

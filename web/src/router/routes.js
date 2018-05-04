@@ -1,6 +1,3 @@
-import Trip from 'pages/Trip'
-import AddTrip from 'pages/AddTrip'
-import Search from 'pages/Search'
 
 export default [
   {
@@ -13,14 +10,15 @@ export default [
       },
       {
         path: '/rechercher',
-        component: Search
+        component: () => import('pages/Search')
       },
       {
         path: '/proposer',
-        component: Trip,
-        children: [
-          { path: 'ajout', component: AddTrip }
-        ]
+        component: () => import('pages/trip/Trip'),
+      },
+      {
+        path: '/proposer/ajout',
+        component: () => import('pages/trip/AddTrip')
       }
     ]
   },
