@@ -18,7 +18,6 @@
   </q-page>
 </template>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADsBFHd9NtZc145Jm-9T84pFY9exMtDkA&libraries=places"></script>
 <script>
   export default {
     name: 'AddTrip',
@@ -31,12 +30,21 @@
     },
     methods: {
       search (terms, done) {
-        this.$http.get('https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+terms+'&key='+this.googleApiKey).then(response => {
-          console.log(response.body)
+        console.log(terms);
+        this.$http.get('/api/geocode/address/' + terms).then(response => {
+          done(this.parseAddress(response.body))
         })
       },
       selected (terms) {
         console.log(terms)
+      },
+      parseAddress(addresses) {
+        return addresses.map(address => {
+          return {
+            label: address.properties.label,
+            value: address.properties.label
+          }
+        })
       }
     },
     mounted () {
