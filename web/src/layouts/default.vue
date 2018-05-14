@@ -26,7 +26,7 @@
         <q-btn flat dense size="lg" icon="search" @click="$router.push('/rechercher')" />
         <q-btn flat dense size="lg" icon="directions_car" @click="$router.push('/proposer')" />
         <q-btn flat dense size="lg" icon="list" />
-        <q-btn flat dense size="lg" icon="account_circle" />
+        <q-btn flat dense size="lg" icon="account_circle" @click="$router.push('/profile')" />
       </q-toolbar>
     </q-layout-footer>
   </q-layout>

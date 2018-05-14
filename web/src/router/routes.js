@@ -19,6 +19,10 @@ export default [
       {
         path: '/proposer/ajout',
         component: () => import('pages/trip/AddTrip')
+      },
+      {
+        path: '/profile',
+        component: () => import('pages/Profile')
       }
     ]
   },
