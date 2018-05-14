@@ -14,6 +14,61 @@
           />
         </q-search>
       </q-item>
+      <q-item-separator v-show="locationSelected"/>
+      <q-item v-show="locationSelected">
+        <q-datetime
+          :value="goTime"
+          @change="val => { goTime = val }"
+          type="time"
+          format24h
+          placeholder="Aller"
+          ok-label="Ok"
+          cancel-label="Annuler"
+          hide-underline
+          class="full-width"
+        />
+      </q-item>
+      <q-item-separator v-show="locationSelected"/>
+      <q-item v-show="locationSelected">
+        <q-datetime
+          :value="backTime"
+          @change="val => { backTime = val }"
+          type="time"
+          format24h
+          placeholder="Retour"
+          ok-label="Ok"
+          cancel-label="Annuler"
+          hide-underline
+          class="full-width"
+        />
+      </q-item>
+      <q-item-separator v-show="locationSelected"/>
+      <q-item v-show="locationSelected">
+        <q-option-group
+          left-label
+          inline
+          type="checkbox"
+          v-model="days"
+          :options="[
+            { label: 'L', value: 'lundi' },
+            { label: 'M', value: 'mardi' },
+            { label: 'M', value: 'mercredi' },
+            { label: 'J', value: 'jeudi' },
+            { label: 'V', value: 'vendredi' },
+            { label: 'S', value: 'samedi' },
+            { label: 'D', value: 'dimanche' }
+          ]"
+        />
+      </q-item>
+      <q-item-separator v-show="locationSelected"/>
+      <q-item v-show="locationSelected">
+        <q-btn
+          label="Continuer"
+          color="primary"
+          class="full-width no-shadow"
+          @click="handler"
+        />
+      </q-item>
     </q-list>
   </q-page>
 </template>
@@ -24,27 +79,35 @@
     data() {
       return {
         terms: null,
-        googlePlaces: null,
-        googleApiKey: 'AIzaSyADsBFHd9NtZc145Jm-9T84pFY9exMtDkA'
+        location: null,
+        locationSelected: false,
+        timeModalOpened: false,
+        goTime: "",
+        backTime: "",
+        days: []
       }
     },
     methods: {
       search (terms, done) {
-        console.log(terms);
         this.$http.get('/api/geocode/address/' + terms).then(response => {
           done(this.parseAddress(response.body))
         })
       },
       selected (terms) {
-        console.log(terms)
+        this.location = terms
+        this.locationSelected = true
       },
       parseAddress(addresses) {
         return addresses.map(address => {
           return {
             label: address.properties.label,
-            value: address.properties.label
+            value: address.properties.label,
+            coordinates: address.geometry.coordinates
           }
         })
+      },
+      toggleDays(day) {
+        this.days.push(day);
       }
     },
     mounted () {

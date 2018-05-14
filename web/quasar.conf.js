@@ -74,10 +74,14 @@ module.exports = function (ctx) {
         'QItemTile',
         'QInput',
         'QSearch',
-        'QAutocomplete'
+        'QAutocomplete',
+        'QModal',
+        'QDatetime',
+        'QOptionGroup'
       ],
       directives: [
-        'Ripple'
+        'Ripple',
+        'CloseOverlay'
       ],
       // Quasar plugins
       plugins: [
