@@ -66,7 +66,7 @@
           label="Continuer"
           color="primary"
           class="full-width no-shadow"
-          @click="handler"
+          @click="$router.push('/proposer/ajout/itineraire')"
         />
       </q-item>
     </q-list>

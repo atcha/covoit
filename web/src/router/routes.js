@@ -21,6 +21,10 @@ export default [
         component: () => import('pages/trip/AddTrip')
       },
       {
+        path: '/proposer/ajout/itineraire',
+        component: () => import('pages/trip/AddTripRoute')
+      },
+      {
         path: '/profile',
         component: () => import('pages/Profile')
       }
