@@ -1,14 +1,21 @@
 // server
-let express = require('express'),
+import { httpProxy } from './proxy';
+const express = require('express'),
+    http = require('http'),
     app = express(),
-    port = process.env.PORT || 3000
-    geocode = require('ban-geocode'),
+    port = process.env.PORT || 3000,
     fetch = require("node-fetch"),
     urlencode = require("urlencode"),
     API_URL = "https://api-adresse.data.gouv.fr";
 
+
+
 const query = q => {
-    return fetch(`${API_URL}/search/?q=${urlencode(q)}`).then(x => x.json());
+    let agentProxy = "";
+    if(httpProxy) {
+        agentProxy = httpProxy;
+    }
+    return fetch(`${API_URL}/search/?q=${urlencode(q)}`, { agent: agentProxy }).then(x => x.json());
 };
 
 app.get('/', function (req, res) {

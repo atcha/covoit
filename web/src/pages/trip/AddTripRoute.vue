@@ -4,9 +4,19 @@
     </GmapMap>
     <q-list>
       <q-list-header>Sélectionnez votre itinéraire</q-list-header>
-      <q-item>
-
-      </q-item>
+      <div v-for="(route, index) in routes.routes">
+        <q-item-separator />
+        <q-item>
+          <q-item-main>
+            <q-item-tile label>{{ route.summary }}</q-item-tile>
+            <q-item-tile sublabel>{{ route.legs[0].distance.text }}</q-item-tile>
+          </q-item-main>
+          <q-item-side right>
+            <q-icon v-if="index == selectedRouteIndex" color="secondary" name="done" size="1.5rem" />
+            <q-btn v-else outline size="sm" color="primary" @click="highlightRoute(index)">Choisir</q-btn>
+          </q-item-side>
+        </q-item>
+      </div>
     </q-list>
   </q-page>
 </template>
@@ -24,7 +34,10 @@
             directionsService: null,
             map: null,
             polylines: [],
-            shadows: []
+            shadows: [],
+            routes: [],
+            selectedRoute: null,
+            selectedRouteIndex: null
           }
         },
         computed: {
@@ -57,11 +70,17 @@
             };
             this.directionsService.route(request, (result, status) => {
               if (status === 'OK') {
+                this.routes = result
                 result.routes.forEach((route, index) => {
                   // let's make the first suggestion highlighted;
                   let hide = (index==0 ? false : true)
                   let shadow = this.drawPolylineShadow(route.overview_path, '#666666')
                   let line = this.drawPolyline(route.overview_path, '#0000ff', hide)
+                  if(index === 0) {
+                    this.selectedRouteIndex = index
+                    this.selectedRoute = route
+                  }
+                  console.log(this.selectedRoute)
                   this.polylines.push(line)
                   this.shadows.push(shadow)
                   this.google.maps.event.addListener(shadow, 'click', (e) => {
@@ -76,6 +95,8 @@
             })
           },
           highlightRoute(index) {
+            this.selectedRouteIndex = index
+            this.selectedRoute = this.routes[index]
             this.polylines.forEach((polyline, i) => {
               if(i === index) {
                 polyline.setMap(this.map)
