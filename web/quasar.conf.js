@@ -77,7 +77,9 @@ module.exports = function (ctx) {
         'QAutocomplete',
         'QModal',
         'QDatetime',
-        'QOptionGroup'
+        'QOptionGroup',
+        'QPageSticky',
+        'QModal'
       ],
       directives: [
         'Ripple',
@@ -85,7 +87,7 @@ module.exports = function (ctx) {
       ],
       // Quasar plugins
       plugins: [
-        'Notify',
+        'Notify'
       ]
     },
     // animations: 'all' --- includes all animations

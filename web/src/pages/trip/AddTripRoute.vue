@@ -17,6 +17,30 @@
           </q-item-side>
         </q-item>
       </div>
+      <q-item-separator />
+      <q-item>
+        <q-btn
+          label="Publier mon trajet"
+          color="primary"
+          class="full-width no-shadow"
+          @click="validateRoute()"
+        />
+      </q-item>
+      <q-modal v-model="validateOpened" content-css="padding: 20px; background: #8bc34a;">
+        <div class="row justify-center text-white">
+          <h4><q-icon name="fa-thumbs-up" size="l" /> Votre trajet est publié</h4>
+          <p class="text-center">
+            Vous serez alerté.e lorsque des passagers seront disponibles.
+          </p>
+          <q-btn
+            color="white"
+            outline
+            class="full-width no-shadow margin btn-validateroute"
+            @click="$router.push({ name: 'home' })"
+            label="Très bien !"
+          />
+        </div>
+      </q-modal>
     </q-list>
   </q-page>
 </template>
@@ -37,7 +61,8 @@
             shadows: [],
             routes: [],
             selectedRoute: null,
-            selectedRouteIndex: null
+            selectedRouteIndex: null,
+            validateOpened: false
           }
         },
         computed: {
@@ -74,8 +99,8 @@
                 result.routes.forEach((route, index) => {
                   // let's make the first suggestion highlighted;
                   let hide = (index==0 ? false : true)
-                  let shadow = this.drawPolylineShadow(route.overview_path, '#666666')
-                  let line = this.drawPolyline(route.overview_path, '#0000ff', hide)
+                  let shadow = this.drawPolylineShadow(route.overview_path, '#79706f')
+                  let line = this.drawPolyline(route.overview_path, '#0076be', hide)
                   if(index === 0) {
                     this.selectedRouteIndex = index
                     this.selectedRoute = route
@@ -130,6 +155,9 @@
               line.setMap(this.map)
             }
             return line
+          },
+          validateRoute() {
+            this.validateOpened = true
           }
         }
     }
