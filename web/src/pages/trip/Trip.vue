@@ -83,7 +83,7 @@
       @click="$router.push('/proposer/ajout')"
       class="fixed"
       icon="add"
-      style="right: 10px; bottom: 60px"
+      style="right: 10px; bottom: 70px"
     />
   </q-page>
 </template>

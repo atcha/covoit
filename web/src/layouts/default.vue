@@ -22,12 +22,43 @@
 
     <!-- Footer -->
     <q-layout-footer>
-      <q-toolbar class="row justify-between">
-        <q-btn flat dense size="lg" icon="search" @click="$router.push('/rechercher')" />
-        <q-btn flat dense size="lg" icon="directions_car" @click="$router.push('/proposer')" />
-        <q-btn flat dense size="lg" icon="list" />
-        <q-btn flat dense size="lg" icon="account_circle" @click="$router.push('/profile')" />
-      </q-toolbar>
+      <q-tabs>
+        <q-route-tab
+          icon="search"
+          to="/rechercher"
+          exact
+          label="Rechercher"
+          slot="title"
+        />
+        <q-route-tab
+          icon="directions_car"
+          to="/proposer"
+          exact
+          label="Proposer"
+          slot="title"
+        />
+        <q-route-tab
+          icon="list"
+          to="/historique"
+          exact
+          label="Historique"
+          slot="title"
+        />
+        <q-route-tab
+          icon="account_circle"
+          to="/profile"
+          exact
+          label="Profil"
+          slot="title"
+        />
+      </q-tabs>
+      <!--<q-toolbar class="row justify-between">-->
+
+        <!--<q-btn flat dense size="lg" icon="search" @click="$router.push('/rechercher')" />-->
+        <!--<q-btn flat dense size="lg" icon="directions_car" @click="$router.push('/proposer')" />-->
+        <!--<q-btn flat dense size="lg" icon="list" @click="$router.push('/historique')" />-->
+        <!--<q-btn flat dense size="lg" icon="account_circle" @click="$router.push('/profile')" />-->
+      <!--</q-toolbar>-->
     </q-layout-footer>
   </q-layout>
 </template>

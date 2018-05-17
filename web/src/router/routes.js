@@ -13,6 +13,7 @@ export default [
         path: '/rechercher',
         component: () => import('pages/Search')
       },
+
       {
         path: '/proposer',
         component: () => import('pages/trip/Trip'),
@@ -25,6 +26,10 @@ export default [
         name: 'itineraire',
         path: '/proposer/ajout/itineraire',
         component: () => import('pages/trip/AddTripRoute')
+      },
+      {
+        path: '/historique',
+        component: () => import('pages/Historic')
       },
       {
         path: '/profile',

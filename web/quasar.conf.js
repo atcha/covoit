@@ -63,6 +63,8 @@ module.exports = function (ctx) {
         'QPage',
         'QToolbar',
         'QToolbarTitle',
+        'QTabs',
+        'QRouteTab',
         'QBtn',
         'QIcon',
         'QList',
@@ -79,7 +81,8 @@ module.exports = function (ctx) {
         'QDatetime',
         'QOptionGroup',
         'QPageSticky',
-        'QModal'
+        'QModal',
+        'QChip'
       ],
       directives: [
         'Ripple',
