@@ -1,6 +1,10 @@
 # Quasar App
 
-### Conf :
+> WIP
+
+## Configuration :
+
+### Proxy :
 If you need to use a proxy, add a proxy file in app/proxy.js that exports an HttpsProxyAgent named httpProxy.
 
 exemple :
@@ -8,5 +12,4 @@ exemple :
   const httpProxy = new HttpsProxyAgent('http://MON-PROXY');
   export { httpProxy };
   ```` 
-> WIP
 
