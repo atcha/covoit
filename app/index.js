@@ -11,10 +11,7 @@ const express = require('express'),
 
 
 const query = q => {
-    let agentProxy = "";
-    if(httpProxy) {
-        agentProxy = httpProxy;
-    }
+    const agentProxy = httpProxy || "";
     return fetch(`${API_URL}/search/?q=${urlencode(q)}`, { agent: agentProxy }).then(x => x.json());
 };
 
