@@ -1,3 +1,4 @@
 app/proxy.js
 web/.npmrc
 **.iml
+.idea
