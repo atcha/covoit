@@ -23,11 +23,15 @@ export default {
 
         app.post('/users', (req, res) => {
             LOGGER.debug(`POST /users`, req.body, '<-');
-            if (!DeployDB.getUsers().data.find((user) => user.login === req.body.login)) {
-                DeployDB.save(DeployDB.getUsers(), req.body);
-                res.send(DeployDB.getUsers().data.find((user) => user.login === req.params.login));
+            if (!req.body.login) {
+                res.send('Il faut au minimum un login pour enregistrer un utilisateur');
             } else {
-                res.send(`Login ${req.body.login} déjà utilisé.`, 400);
+                if (!DeployDB.getUsers().data.find((user) => user.login === req.body.login)) {
+                    DeployDB.save(DeployDB.getUsers(), req.body);
+                    res.send(DeployDB.getUsers().data.find((user) => user.login === req.params.login));
+                } else {
+                    res.send(`Login ${req.body.login} déjà utilisé.`, 400);
+                }
             }
         });
 
