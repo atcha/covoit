@@ -21,6 +21,9 @@
     "https-proxy-agent": "^2.2.1",
     "isomorphic-fetch": "^2.2.1",
     "node-fetch": "^2.1.2",
-    "urlencode": "^1.1.0"
-  }
+    "urlencode": "^1.1.0",
+    "lokijs": "^1.5.1",
+    "winston": "^2.4.0"
+  },
+  "registry": "https://registry.npmjs.org/"
 }
