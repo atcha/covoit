@@ -1,4 +1,6 @@
 app/proxy.js
 web/.npmrc
+app/.npmrc
 **.iml
 .idea
+app/logs/logs.log
