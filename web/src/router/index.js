@@ -4,12 +4,13 @@ import VueRouter from 'vue-router'
 import routes from './routes'
 import VueRessource from 'vue-resource'
 import * as VueGoogleMaps from 'vue2-google-maps'
+import GoogleMap from '../secret/googleMap';
 
 Vue.use(VueRouter)
 Vue.use(VueRessource)
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyADsBFHd9NtZc145Jm-9T84pFY9exMtDkA',
+    key: GoogleMap.key,
     libraries: 'places',
   },
 })
@@ -26,7 +27,7 @@ const Router = new VueRouter({
   // Leave as is and change from quasar.conf.js instead!
   mode: process.env.VUE_ROUTER_MODE,
   base: process.env.VUE_ROUTER_BASE,
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({y: 0}),
   routes
 })
 
