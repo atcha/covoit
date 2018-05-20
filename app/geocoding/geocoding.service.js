@@ -1,6 +1,12 @@
 import LOGGER from '../utils/logger';
 // server
-import {httpProxy} from '../proxy';
+
+let httpProxy;
+try {
+    httpProxy = require('../proxy').httpProxy;
+}catch(e){
+    console.warn("No proxy loaded");
+}
 
 const fetch = require("node-fetch"),
     urlencode = require("urlencode"),
