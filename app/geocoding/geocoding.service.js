@@ -5,7 +5,7 @@ let httpProxy;
 try {
     httpProxy = require('../proxy').httpProxy;
 }catch(e){
-    console.warn("No proxy loaded");
+    LOGGER.warn("No proxy loaded");
 }
 
 const fetch = require("node-fetch"),
