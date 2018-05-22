@@ -2,13 +2,17 @@ import LOGGER from '../utils/logger';
 import DeployDB from "../utils/DeployDB";
 
 export default {
+    getuser: function (login) {
+        return DeployDB.getUsers().data.find((user) => user.login === login);
+    },
+    createUser: function (user) {
+        DeployDB.save(DeployDB.getUsers(), user);
+    },
     registerService: (app) => {
         LOGGER.info("registering users service");
-
-
         app.get('/users/:login', (req, res) => {
             LOGGER.debug(`GET /users/${req.params.login}`);
-            let requestedUser = DeployDB.getUsers().data.find((user) => user.login === req.params.login);
+            let requestedUser = this.getuser(req.params.login);
             if (requestedUser) {
                 res.send(requestedUser);
             } else {
@@ -27,7 +31,7 @@ export default {
                 res.send('Il faut au minimum un login pour enregistrer un utilisateur');
             } else {
                 if (!DeployDB.getUsers().data.find((user) => user.login === req.body.login)) {
-                    DeployDB.save(DeployDB.getUsers(), req.body);
+                    this.createUser(req.body);
                     res.send(DeployDB.getUsers().data.find((user) => user.login === req.params.login));
                 } else {
                     res.send(`Login ${req.body.login} déjà utilisé.`, 400);

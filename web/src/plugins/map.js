@@ -1,12 +1,12 @@
 // import something here
 import * as VueGoogleMaps from 'vue2-google-maps'
-
+import GoogleMap from '../secret/googleMap';
 // leave the export, even if you don't use it
 export default ({ app, router, Vue }) => {
   // something to do
   Vue.use(VueGoogleMaps, {
     load: {
-      key: 'AIzaSyADsBFHd9NtZc145Jm-9T84pFY9exMtDkA',
+      key: GoogleMap.key,
       libraries: 'places', // This is required if you use the Autocomplete plugin
       // OR: libraries: 'places,drawing'
       // OR: libraries: 'places,drawing,visualization'

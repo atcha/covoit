@@ -1,6 +1,7 @@
 import LOGGER from './utils/logger';
 import GeocodingService from './geocoding/geocoding.service';
 import UsersService from './users/users.service';
+import LoginFacebookService from './login/loginFacebook.service';
 import DeployDb from './utils/DeployDB';
 import bodyParser from 'body-parser';
 
@@ -18,6 +19,8 @@ DeployDb.init().then(() => {
     LOGGER.info("db initialized");
     GeocodingService.registerService(app);
     UsersService.registerService(app);
+    LoginFacebookService.registerService(app);
+    LoginFacebookService.registerStrategy();
 });
 
 
