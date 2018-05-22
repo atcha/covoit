@@ -10,6 +10,11 @@ export default [
         component: () => import('pages/index')
       },
       {
+        name: 'login',
+        path: '/login',
+        component: () => import('pages/login/login')
+      },
+      {
         path: '/rechercher',
         component: () => import('pages/Search')
       },
