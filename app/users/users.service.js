@@ -2,7 +2,7 @@ import LOGGER from '../utils/logger';
 import DeployDB from "../utils/DeployDB";
 
 export default {
-    getuser: function (login) {
+    getUser: function (login) {
         return DeployDB.getUsers().data.find((user) => user.login === login);
     },
     createUser: function (user) {
@@ -12,7 +12,7 @@ export default {
         LOGGER.info("registering users service");
         app.get('/users/:login', (req, res) => {
             LOGGER.debug(`GET /users/${req.params.login}`);
-            let requestedUser = this.getuser(req.params.login);
+            let requestedUser = this.getUser(req.params.login);
             if (requestedUser) {
                 res.send(requestedUser);
             } else {
