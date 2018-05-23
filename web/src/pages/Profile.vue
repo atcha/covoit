@@ -43,25 +43,19 @@
             Préférences
           </q-list-header>
           <q-item>
-            <q-item-title sublabel>{{ phone }}</q-item-title>
+            <q-item-title sublabel>Mot de passe</q-item-title>
           </q-item>
           <q-item>
-            <q-item-title sublabel>{{ email }}</q-item-title>
-          </q-item>
-          <q-item>
-            <q-item-title sublabel>{{ address }}</q-item-title>
+            <q-item-title sublabel>Adresse postale</q-item-title>
           </q-item>
           <q-list-header>
             A propos
           </q-list-header>
           <q-item>
-            <q-item-title sublabel>{{ phone }}</q-item-title>
+            <q-item-title sublabel>Aide</q-item-title>
           </q-item>
           <q-item>
-            <q-item-title sublabel>{{ email }}</q-item-title>
-          </q-item>
-          <q-item>
-            <q-item-title sublabel>{{ address }}</q-item-title>
+            <q-item-title sublabel>Conditions générales</q-item-title>
           </q-item>
         </q-list>
       </q-tab-pane>
