@@ -1,6 +1,8 @@
 import LOGGER from "../utils/logger";
 import UserService from "../users/users.service";
 
+
+
 let GOOGLE_APP_ID, GOOGLE_APP_SECRET;
 try {
     GOOGLE_APP_ID = require('../secrets/google').GOOGLE_APP_ID;
@@ -26,8 +28,7 @@ export default {
     registerStrategy: () => {
         if (GOOGLE_APP_ID && GOOGLE_APP_SECRET) {
             LOGGER.info("Registering Facebook Strategy");
-            passport.use(new GoogleStrategy({
-                    clientID: GOOGLE_APP_ID,
+            let googleStrategy = new GoogleStrategy({clientID: GOOGLE_APP_ID,
                     clientSecret: GOOGLE_APP_SECRET,
                     callbackURL: "http://localhost:8080/api/auth/google/callback"
                 },
@@ -38,11 +39,11 @@ export default {
                         UserService.createUser(profile);
                     }
                 }
-            ));
+            );
             if (httpsProxy) {
-                GoogleStrategy._oauth2.setAgent(httpsProxy);
+                googleStrategy._oauth2.setAgent(httpsProxy);
             }
-            passport.use(GoogleStrategy);
+            passport.use(googleStrategy);
         }
     },
     registerService: (app) => {
