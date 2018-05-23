@@ -25,10 +25,9 @@
         <q-card-separator/>
         <q-card-actions class="bg-grey-11 inline-block vertical-middle">
           <!--<q-btn color="secondary" class="full-width" style="margin-top: 15px;">Connexion</q-btn>-->
-          <q-btn color="google" icon="fab fa-google" label="Connexion" class="full-width" style="margin-top: 15px;" />
+          <q-btn color="google" icon="fab fa-google" label="Connexion" to="/google/login" class="full-width" style="margin-top: 15px;" />
           <q-btn color="facebook" icon="fab fa-facebook" label="Connexion" to="/facebook/login" class="full-width" style="margin-top: 15px;" />
           <p style="margin-top: 15px;">Pas de compte ? <router-link to="/sign-up">Créez le maintenant.</router-link></p>
-          <a href="api/auth/facebook">Login with Facebook</a>
 
         </q-card-actions>
       </q-card>

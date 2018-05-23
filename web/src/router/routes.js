@@ -54,6 +54,12 @@ export default [
       window.location = '/api/auth/facebook'
     }
   },
+  {
+    path: '/google/login',
+    beforeEnter(to, from, next) {
+      window.location = '/api/auth/google'
+    }
+  },
   { // Always leave this as last one
     path: '*',
     component: () => import('pages/404'),

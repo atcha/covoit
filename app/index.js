@@ -2,6 +2,7 @@ import LOGGER from './utils/logger';
 import GeocodingService from './geocoding/geocoding.service';
 import UsersService from './users/users.service';
 import LoginFacebookService from './login/loginFacebook.service';
+import LoginGoogleService from './login/loginGoogle.service';
 import DeployDb from './utils/DeployDB';
 import bodyParser from 'body-parser';
 
@@ -21,6 +22,8 @@ DeployDb.init().then(() => {
     UsersService.registerService(app);
     LoginFacebookService.registerService(app);
     LoginFacebookService.registerStrategy();
+    LoginGoogleService.registerService(app);
+    LoginGoogleService.registerStrategy();
 });
 
 
