@@ -5,6 +5,9 @@ let FACEBOOK_APP_ID, FACEBOOK_APP_SECRET;
 try {
     FACEBOOK_APP_ID = require('../secrets/facebook').FACEBOOK_APP_ID;
     FACEBOOK_APP_SECRET = require('../secrets/facebook').FACEBOOK_APP_SECRET;
+    if (!FACEBOOK_APP_ID || !FACEBOOK_APP_SECRET) {
+        throw "error loading facebook data";
+    }
 } catch (e) {
     LOGGER.warn("Clefs facebook introuvable, désactivation du endpoint facebook...");
 }

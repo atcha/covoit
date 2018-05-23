@@ -17,10 +17,6 @@ module.exports = function (ctx) {
       'fontawesome'
     ],
     supportIE: false,
-    vendor: {
-      add: [],
-      remove: []
-    },
     build: {
       scopeHoisting: true,
       vueRouterMode: 'history',
@@ -81,8 +77,14 @@ module.exports = function (ctx) {
         'QDatetime',
         'QOptionGroup',
         'QPageSticky',
-        'QModal',
-        'QChip'
+        'QChip',
+        'QCard',
+        'QCardTitle',
+        'QCardMain',
+        'QCardMedia',
+        'QCardSeparator',
+        'QCardActions',
+        'QField'
       ],
       directives: [
         'Ripple',

@@ -6,7 +6,7 @@
         text-color="primary"
       >
         <router-link to="/">
-          <img src="../assets/logo-mdp.svg" width="50" height="50" />
+          <img src="../assets/logo.svg" width="50" height="50" />
         </router-link>
 
         <q-toolbar-title>

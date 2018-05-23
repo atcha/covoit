@@ -10,11 +10,6 @@ export default [
         component: () => import('pages/index')
       },
       {
-        name: 'login',
-        path: '/login',
-        component: () => import('pages/login/login')
-      },
-      {
         path: '/rechercher',
         component: () => import('pages/Search')
       },
@@ -40,7 +35,24 @@ export default [
         path: '/profile',
         component: () => import('pages/Profile')
       }
+    ],
+  },
+  {
+    path: '/login',
+    component: () => import('layouts/login'),
+    children: [
+      {
+        name: 'login',
+        path: '',
+        component: () => import('pages/login/login')
+      }
     ]
+  },
+  {
+    path: '/facebook/login',
+    beforeEnter(to, from, next) {
+      window.location = '/api/auth/facebook'
+    }
   },
   { // Always leave this as last one
     path: '*',
