@@ -19,7 +19,7 @@ try {
     LOGGER.warn("No proxy loaded");
 }
 
-var passport = require('passport')
+const passport = require('passport')
     , FacebookStrategy = require('passport-facebook').Strategy;
 
 export default {
