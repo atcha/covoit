@@ -23,6 +23,11 @@ export default {
 
         app.get('/geocode/address/:address', (req, res) => {
             LOGGER.debug(`/geocode/address/${req.params.address}`);
+            LOGGER.info(req.user);
+            if(!req.user){
+                res.status(401).send("Il faut être connecté pour utiliser cette fonctionnalitée");
+                return;
+            }
             query(req.params.address).then(json => res.send(json.features));
         });
 

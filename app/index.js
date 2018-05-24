@@ -16,6 +16,15 @@ const express = require('express'),
 app.use(bodyParser.json()); // for parsing application/json
 
 const passport = require('passport');
+var expressSession = require('express-session');
+
+app.use(expressSession({
+    secret: 'cookie_secret',
+    name: 'covoit_cookie',
+    proxy: true,
+    resave: true,
+    saveUninitialized: true
+}));
 
 
 app.use(passport.initialize());
@@ -31,7 +40,7 @@ DeployDb.init().then(() => {
 
     passport.deserializeUser(function(userId, done) {
         LOGGER.debug("deserializeUser",userId);
-        done(null, DeployDb.getUser(userId));
+        done(null, UsersService.getUser(userId));
     });
 
 
