@@ -15,9 +15,26 @@ const express = require('express'),
 
 app.use(bodyParser.json()); // for parsing application/json
 
+const passport = require('passport');
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 DeployDb.init().then(() => {
     LOGGER.info("db initialized");
+
+    passport.serializeUser(function(user, done) {
+        done(null, user.id);
+    });
+
+    passport.deserializeUser(function(userId, done) {
+        LOGGER.debug("deserializeUser",userId);
+        done(null, DeployDb.getUser(userId));
+    });
+
+
     GeocodingService.registerService(app);
     UsersService.registerService(app);
     LoginFacebookService.registerService(app);

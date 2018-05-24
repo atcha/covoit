@@ -33,7 +33,7 @@ export default {
                     profileFields: ['id', 'displayName', 'email']
                 },
                 function (accessToken, refreshToken, profile, done) {
-                    LOGGER.debug("GetOrCreate Facebook user", profile.displayName);
+                    LOGGER.debug("GetOrCreate Facebook user", profile.displayName, profile.id);
                     const user = UserService.getUser(profile.id);
                     if (!user) {
                         UserService.createUser(profile);
@@ -55,7 +55,8 @@ export default {
                 passport.authenticate('facebook', {
                     successRedirect: '/',
                     failureRedirect: '/login'
-                }));
+                })
+            );
         }
     }
 }

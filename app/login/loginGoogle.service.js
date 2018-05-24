@@ -2,7 +2,6 @@ import LOGGER from "../utils/logger";
 import UserService from "../users/users.service";
 
 
-
 let GOOGLE_APP_ID, GOOGLE_APP_SECRET;
 try {
     GOOGLE_APP_ID = require('../secrets/google').GOOGLE_APP_ID;
@@ -24,20 +23,23 @@ try {
 const passport = require('passport'),
     GoogleStrategy = require('passport-google-oauth20').Strategy;
 
+
 export default {
     registerStrategy: () => {
         if (GOOGLE_APP_ID && GOOGLE_APP_SECRET) {
-            LOGGER.info("Registering Facebook Strategy");
-            let googleStrategy = new GoogleStrategy({clientID: GOOGLE_APP_ID,
+            LOGGER.info("Registering Google Strategy");
+            let googleStrategy = new GoogleStrategy({
+                    clientID: GOOGLE_APP_ID,
                     clientSecret: GOOGLE_APP_SECRET,
                     callbackURL: "http://localhost:8080/api/auth/google/callback"
                 },
-                function (accessToken, refreshToken, profile, cb) {
-                    LOGGER.debug("GetOrCreate Google user", profile, cb);
+                function (accessToken, refreshToken, profile, done) {
+                    LOGGER.debug("GetOrCreate Google user", profile.displayName, profile.id);
                     const user = UserService.getUser(profile.id);
                     if (!user) {
                         UserService.createUser(profile);
                     }
+                    done(null, user);
                 }
             );
             if (httpsProxy) {
@@ -51,11 +53,10 @@ export default {
             LOGGER.info("Registering Google Service");
             app.get('/auth/google', passport.authenticate('google', {scope: ['profile']}));
             app.get('/auth/google/callback',
-                passport.authenticate('google', {failureRedirect: '/login'}),
-                function (req, res) {
-                    // Successful authentication, redirect home.
-                    res.redirect('/');
-                }
+                passport.authenticate('google', {
+                    successRedirect: '/',
+                    failureRedirect: '/login'
+                })
             );
         }
     }
