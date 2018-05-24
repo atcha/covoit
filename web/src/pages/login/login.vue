@@ -3,7 +3,7 @@
     <div class="form-login col-10 col-md-3">
       <q-card class="text-center">
         <q-card-title class="bg-primary">
-          <!--<img src="../../assets/logo.svg" width="128" height="128" />-->
+          <img src="../../assets/logo.png" width="128" height="128" />
           <h4 class="text-white">Connectez-vous</h4>
         </q-card-title>
         <q-card-separator/>
@@ -52,5 +52,7 @@
   }
 </script>
 
-<style>
+<style lang="stylus" scoped>
+  h4
+    margin-top 0
 </style>
