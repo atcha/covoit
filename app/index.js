@@ -3,6 +3,7 @@ import GeocodingService from './geocoding/geocoding.service';
 import UsersService from './users/users.service';
 import LoginFacebookService from './login/loginFacebook.service';
 import LoginGoogleService from './login/loginGoogle.service';
+import Login from './login/login.service';
 import DeployDb from './utils/DeployDB';
 import bodyParser from 'body-parser';
 
@@ -50,6 +51,7 @@ DeployDb.init().then(() => {
     LoginFacebookService.registerStrategy();
     LoginGoogleService.registerService(app);
     LoginGoogleService.registerStrategy();
+    Login.registerService(app);
 });
 
 
