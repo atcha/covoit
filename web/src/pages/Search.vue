@@ -8,6 +8,7 @@
         <q-input
           float-label="Votre lieu de départ"
           class="full-width"
+          v-model="address"
           :before="[
             {
               icon: 'search'
@@ -30,6 +31,7 @@
       return {
         markers: [],
         place: null,
+        address: ''
       }
     },
     description: 'Autocomplete Example (#164)',

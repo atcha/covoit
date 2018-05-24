@@ -19,7 +19,7 @@
               <q-icon name="phone_android" />
             </q-item-side>
             <q-item-main>
-              <q-item-title sublabel>{{ phone }}</q-item-title>
+              <q-item-tile sublabel>{{ phone }}</q-item-tile>
             </q-item-main>
           </q-item>
           <q-item>
@@ -27,7 +27,7 @@
               <q-icon name="email" />
             </q-item-side>
             <q-item-main>
-              <q-item-title sublabel>{{ email }}</q-item-title>
+              <q-item-tile sublabel>{{ email }}</q-item-tile>
             </q-item-main>
           </q-item>
           <q-item>
@@ -35,7 +35,7 @@
               <q-icon name="bookmark" />
             </q-item-side>
             <q-item-main>
-              <q-item-title sublabel>{{ address }}</q-item-title>
+              <q-item-tile sublabel>{{ address }}</q-item-tile>
             </q-item-main>
           </q-item>
           <q-item-separator />
@@ -44,7 +44,7 @@
           </q-list-header>
           <q-item>
             <q-item-main>
-              <q-item-title v-if="car" sublabel>{{ car }}</q-item-title>
+              <q-item-tile v-if="car" sublabel>{{ car }}</q-item-tile>
             </q-item-main>
             <q-item-side v-if="car" right>
               <q-btn v-if="car"
@@ -72,7 +72,7 @@
           </q-list-header>
           <q-item>
             <q-item-main>
-              <q-item-title sublabel>Mot de passe</q-item-title>
+              <q-item-tile sublabel>Mot de passe</q-item-tile>
             </q-item-main>
             <q-item-side right>
               <q-btn flat round dense icon="more_vert">
@@ -94,7 +94,7 @@
           </q-item>
           <q-item>
             <q-item-main>
-              <q-item-title sublabel>Adresse postale</q-item-title>
+              <q-item-tile sublabel>Adresse postale</q-item-tile>
             </q-item-main>
             <q-item-side right>
               <q-btn flat round dense icon="more_vert">
@@ -116,10 +116,10 @@
             A propos
           </q-list-header>
           <q-item>
-            <q-item-title sublabel>Aide</q-item-title>
+            <q-item-tile sublabel>Aide</q-item-tile>
           </q-item>
           <q-item>
-            <q-item-title sublabel>Conditions générales</q-item-title>
+            <q-item-tile sublabel>Conditions générales</q-item-tile>
           </q-item>
         </q-list>
       </q-tab-pane>
