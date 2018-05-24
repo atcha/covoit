@@ -23,13 +23,13 @@ try {
 const passport = require('passport'),
     GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-passport.serializeUser(function(user, done) {
-    done(null, JSON.stringify(user));
-});
-
-passport.deserializeUser(function(user, done) {
-    done(null, JSON.parse(user));
-});
+// passport.serializeUser(function(user, done) {
+//     done(null, JSON.stringify(user));
+// });
+//
+// passport.deserializeUser(function(user, done) {
+//     done(null, JSON.parse(user));
+// });
 
 export default {
     registerStrategy: () => {
@@ -56,14 +56,15 @@ export default {
     },
     registerService: (app) => {
         if (GOOGLE_APP_ID && GOOGLE_APP_SECRET) {
-            app.use(passport.initialize());
-            app.use(passport.session());
+            // app.use(passport.initialize());
+            // app.use(passport.session());
             LOGGER.info("Registering Google Service");
             app.get('/auth/google', passport.authenticate('google', {scope: ['profile']}));
             app.get('/auth/google/callback',
                 passport.authenticate('google', {
                     successRedirect: '/',
-                    failureRedirect: '/login'
+                    failureRedirect: '/login',
+                    session : false
                 })
             );
         }
