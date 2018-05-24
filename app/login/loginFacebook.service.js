@@ -55,7 +55,8 @@ export default {
                 passport.authenticate('facebook', {
                     successRedirect: '/',
                     failureRedirect: '/login'
-                }));
+                })
+            );
         }
     }
 }
