@@ -5,6 +5,7 @@ import routes from './routes'
 import VueRessource from 'vue-resource'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import GoogleMap from '../secret/googleMap';
+import {Dialog} from 'quasar'
 
 Vue.use(VueRouter)
 Vue.use(VueRessource)
@@ -29,6 +30,43 @@ const Router = new VueRouter({
   base: process.env.VUE_ROUTER_BASE,
   scrollBehavior: () => ({y: 0}),
   routes
-})
+});
+
+Vue.http.interceptors.push(function (request) {
+
+  // modify request
+
+  // return response callback
+  return function (response) {
+    let errorDialog = {
+      title: 'Warning',
+
+      // optional
+      color: 'primary',
+
+      // optional; we want an "OK" button
+      ok: true, // takes i18n value, or String for "OK" button label
+    };
+    let goToLogin = () => {
+      window.location = "/login"
+    };
+    switch (response.status) {
+      case 401:
+        errorDialog.message = "Vous devez être connecté pour utiliser cette fonctionnalité.";
+        Dialog.create(errorDialog)
+          .then(goToLogin)
+          .catch(goToLogin);
+        break;
+      case 403:
+        errorDialog.message = "Vous n'avez pas les droits requis pour utiliser cette fonctionnalité.";
+        Dialog.create(errorDialog)
+          .then(goToLogin)
+          .catch(goToLogin);
+        ;
+        break;
+    }
+  };
+});
+
 
 export default Router
