@@ -60,6 +60,12 @@ export default [
       window.location = '/api/auth/google'
     }
   },
+  {
+    path: '/logout',
+    beforeEnter(to, from, next) {
+      window.location = '/api/auth/logout'
+    }
+  },
   { // Always leave this as last one
     path: '*',
     component: () => import('pages/404'),
