@@ -64,10 +64,7 @@ Vue.http.interceptors.push((request) => {
         break;
       case 403:
         errorDialog.message = "Vous n'avez pas les droits requis pour utiliser cette fonctionnalité.";
-        Dialog.create(errorDialog)
-          .then(goToLogin)
-          .catch(goToLogin);
-        ;
+        Dialog.create(errorDialog);
         break;
       case 500:
         errorDialog.message = "Une erreur est survenue, veuillez nous excuser pour la gêne occasionnée.";
