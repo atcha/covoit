@@ -39,7 +39,7 @@ Vue.http.interceptors.push(function (request) {
   // return response callback
   return function (response) {
     let errorDialog = {
-      title: 'Warning',
+      title: 'Attention',
 
       // optional
       color: 'primary',
@@ -63,6 +63,10 @@ Vue.http.interceptors.push(function (request) {
           .then(goToLogin)
           .catch(goToLogin);
         ;
+        break;
+      case 500:
+        errorDialog.message = "Une erreur est survenue, veuillez nous excuser pour la gêne occasionnée.";
+        Dialog.create(errorDialog);
         break;
     }
   };
