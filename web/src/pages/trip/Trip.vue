@@ -99,7 +99,8 @@
   }
 </script>
 
-<style>
+<style lang="stylus" scoped>
+  @import "../../css/pages/trip/trip.styl"
 </style>
 
 

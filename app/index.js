@@ -17,16 +17,16 @@ const express = require('express'),
 app.use(bodyParser.json()); // for parsing application/json
 
 const passport = require('passport');
-var expressSession = require('express-session');
+let expressSession = require('express-session');
 
 app.use(expressSession({
     secret: 'cookie_secret',
     name: 'covoit_cookie',
     proxy: true,
     resave: true,
+    cookie: { httpOnly: false },
     saveUninitialized: true
 }));
-
 
 app.use(passport.initialize());
 app.use(passport.session());

@@ -5,7 +5,7 @@ import routes from './routes'
 import VueRessource from 'vue-resource'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import GoogleMap from '../secret/googleMap';
-import {Dialog} from 'quasar'
+import { Dialog, Cookies } from 'quasar'
 
 Vue.use(VueRouter)
 Vue.use(VueRessource)
@@ -32,7 +32,12 @@ const Router = new VueRouter({
   routes
 });
 
-Vue.http.interceptors.push(function (request) {
+if(!Cookies.has('covoit_cookie')) {
+  Router.replace('/login');
+}
+
+
+Vue.http.interceptors.push((request) => {
 
   // modify request
 
