@@ -32,10 +32,6 @@ const Router = new VueRouter({
   routes
 });
 
-if(!Cookies.has('covoit_cookie')) {
-  Router.replace('/login');
-}
-
 
 Vue.http.interceptors.push((request) => {
 
@@ -73,6 +69,5 @@ Vue.http.interceptors.push((request) => {
     }
   };
 });
-
 
 export default Router

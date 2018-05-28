@@ -13,5 +13,13 @@ export default {
             }
         });
 
+        app.get('/logout', (req, res) => {
+            req.logout();
+            req.session.destroy((err) => {
+                LOGGER.error('Can\'t destroy session');
+            });
+            res.redirect('/login');
+        });
+
     }
 };

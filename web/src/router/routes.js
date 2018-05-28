@@ -63,7 +63,7 @@ export default [
   {
     path: '/logout',
     beforeEnter(to, from, next) {
-      window.location = '/api/auth/logout'
+      window.location = '/api/logout'
     }
   },
   { // Always leave this as last one

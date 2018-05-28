@@ -10,12 +10,6 @@ export default {
     return {
       userCookie: ''
     }
-  },
-  mounted() {
-    // if(this.$q.cookies.get('covoit_cookie'))
-    //   this.userCookie = this.$q.cookies.get('covoit_cookie')
-    //
-    // console.log(this.$q.cookies.all())
   }
 }
 </script>
