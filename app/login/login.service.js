@@ -16,8 +16,13 @@ export default {
         app.get('/logout', (req, res) => {
             req.logout();
             req.session.destroy((err) => {
-                LOGGER.error('Can\'t destroy session');
+                if(err) {
+                    LOGGER.error('Can\'t destroy session, ' + err);
+                } else {
+                    LOGGER.info("unregistering service");
+                }
             });
+            res.clearCookie('covoit_cookie', { path: '/' });
             res.redirect('/login');
         });
 
