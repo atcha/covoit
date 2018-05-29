@@ -50,8 +50,6 @@
 
     export default {
         name: "AddTripRoute",
-        components: {
-        },
         data() {
           return {
             directionsDisplay: null,
@@ -163,6 +161,5 @@
     }
 </script>
 
-<style scoped>
-
+<style>
 </style>

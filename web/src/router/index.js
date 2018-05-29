@@ -5,7 +5,7 @@ import routes from './routes'
 import VueRessource from 'vue-resource'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import GoogleMap from '../secret/googleMap';
-import {Dialog} from 'quasar'
+import { Dialog, Cookies } from 'quasar'
 
 Vue.use(VueRouter)
 Vue.use(VueRessource)
@@ -32,7 +32,8 @@ const Router = new VueRouter({
   routes
 });
 
-Vue.http.interceptors.push(function (request) {
+
+Vue.http.interceptors.push((request) => {
 
   // modify request
 
@@ -68,6 +69,5 @@ Vue.http.interceptors.push(function (request) {
     }
   };
 });
-
 
 export default Router

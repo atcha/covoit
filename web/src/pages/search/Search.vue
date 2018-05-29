@@ -5,19 +5,14 @@
       <q-list-header>Votre recherche</q-list-header>
       <q-item-separator/>
       <q-item class="search-form">
-        <q-input
-          float-label="Votre lieu de départ"
-          class="full-width"
-          v-model="address"
-          :before="[
-            {
-              icon: 'search'
-            }
-          ]"
-        />
-      </q-item>
-      <q-item>
-
+        <!-- Adds a separator between results -->
+        <q-search v-model="terms" class="full-width" placeholder="Votre lieu de départ">
+          <q-autocomplete
+            separator
+            @search="search"
+            @selected="selected"
+          />
+        </q-search>
       </q-item>
     </q-list>
   </q-page>
@@ -31,11 +26,29 @@
       return {
         markers: [],
         place: null,
-        address: ''
+        address: '',
+        location: ''
       }
     },
     description: 'Autocomplete Example (#164)',
     methods: {
+      search (terms, done) {
+        this.$http.get('/api/geocode/address/' + terms).then(response => {
+          done(this.parseAddress(response.body))
+        })
+      },
+      selected (terms) {
+        this.$router.push({ name: 'searchhour', params: { start: terms } })
+      },
+      parseAddress(addresses) {
+        return addresses.map(address => {
+          return {
+            label: address.properties.label,
+            value: address.properties.label,
+            coordinates: address.geometry.coordinates
+          }
+        })
+      },
       setDescription(description) {
         this.description = description;
       },

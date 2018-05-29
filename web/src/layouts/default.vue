@@ -13,6 +13,7 @@
           {{title}}
           <div slot="subtitle">{{ subTitle }}</div>
         </q-toolbar-title>
+        <q-btn flat dense icon="fas fa-sign-out-alt" to="/logout" />
       </q-toolbar>
     </q-layout-header>
 

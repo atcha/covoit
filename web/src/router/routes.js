@@ -11,9 +11,13 @@ export default [
       },
       {
         path: '/rechercher',
-        component: () => import('pages/Search')
+        component: () => import('pages/search/Search')
       },
-
+      {
+        name: 'searchhour',
+        path: '/rechercher-horaire',
+        component: () => import('pages/search/SearchHour')
+      },
       {
         path: '/proposer',
         component: () => import('pages/trip/Trip'),
@@ -58,6 +62,12 @@ export default [
     path: '/google/login',
     beforeEnter(to, from, next) {
       window.location = '/api/auth/google'
+    }
+  },
+  {
+    path: '/logout',
+    beforeEnter(to, from, next) {
+      window.location = '/api/logout'
     }
   },
   { // Always leave this as last one

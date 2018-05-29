@@ -161,16 +161,5 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-  @import "../css/themes/common.variables.styl"
-  .profile-header
-    background $primary
-    padding 15px 0
-    img
-      border-radius 50%
-    h3
-      margin 15px 0
-  .q-tab-pane
-    border none
-  .q-item-separator-component
-    margin 15px 0
+@import "../css/pages/profile.styl"
 </style>
