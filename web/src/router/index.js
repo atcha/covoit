@@ -53,7 +53,12 @@ Vue.http.interceptors.push((request) => {
     };
     switch (response.status) {
       case 401:
-        errorDialog.message = "Vous devez être connecté pour utiliser cette fonctionnalité.";
+        if(request.url === "/api/login"){
+          errorDialog.message = "Le couple Login/Mot de passe n'est pas valide.";
+        }
+        else{
+          errorDialog.message = "Vous devez être connecté pour utiliser cette fonctionnalité.";
+        }
         Dialog.create(errorDialog)
           .then(goToLogin)
           .catch(goToLogin);
