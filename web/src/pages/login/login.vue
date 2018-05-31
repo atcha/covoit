@@ -13,13 +13,13 @@
               float-label="Login"
               v-model="login" />
           </q-field>
-          <q-field error-label="Le mot de passe est obligatoire" class="text-left">
+          <q-field error-label="Le mot de passe est obligatoire" class="text-left" style="margin-top: 15px;">
             <q-input
               type="password"
               float-label="Mot de passe"
               max-length="16"
               v-model="password"
-              @keyup.enter="login" />
+              @keyup.enter="loginAction" />
           </q-field>
         </q-card-main>
         <q-card-separator/>
