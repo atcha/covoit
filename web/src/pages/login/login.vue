@@ -10,8 +10,8 @@
         <q-card-main class="bg-white">
           <q-field error-label="Un e-mail valide est requis" class="text-left">
             <q-input
-              float-label="e-mail"
-              v-model="email" />
+              float-label="Login"
+              v-model="login" />
           </q-field>
           <q-field error-label="Le mot de passe est obligatoire" class="text-left">
             <q-input
@@ -25,9 +25,10 @@
         <q-card-separator/>
         <q-card-actions class="bg-grey-11 inline-block vertical-middle">
           <!--<q-btn color="secondary" class="full-width" style="margin-top: 15px;">Connexion</q-btn>-->
+          <q-btn color="primary" label="Connexion" @click="loginAction" class="full-width" style="margin-top: 15px;" />
           <q-btn color="google" icon="fab fa-google" label="Connexion" to="/google/login" class="full-width" style="margin-top: 15px;" />
           <q-btn color="facebook" icon="fab fa-facebook" label="Connexion" to="/facebook/login" class="full-width" style="margin-top: 15px;" />
-          <p style="margin-top: 15px;">Pas de compte ? <router-link to="/sign-up">Créez le maintenant.</router-link></p>
+          <!--<p style="margin-top: 15px;">Pas de compte ? <router-link to="/sign-up">Créez le maintenant.</router-link></p>-->
 
         </q-card-actions>
       </q-card>
@@ -40,13 +41,19 @@
     name: 'login',
     data() {
       return {
-        email: '',
+        login: '',
         password: ''
       }
     },
     methods: {
-      login() {
-        console.log('classical login')
+      loginAction() {
+        this.$http.post('/api/login',{
+          login : this.login,
+          password : this.password
+        })
+          .then(() => {
+              this.$router.push('/');
+          });
       }
     }
   }
