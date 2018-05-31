@@ -1,6 +1,6 @@
 <template>
   <q-page padding class="trip-add">
-    <q-btn flat icon="arrow_back" @click="$router.go(-1)"/>
+    <q-btn class="btn-back" flat icon="arrow_back" @click="$router.go(-1)"/>
     <q-list>
       <q-list-header>Votre Lieu de départ</q-list-header>
       <q-item-separator/>

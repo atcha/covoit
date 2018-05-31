@@ -1,5 +1,6 @@
 <template>
   <q-page padding>
+    <q-btn class="btn-back" flat icon="arrow_back" @click="$router.go(-1)"/>
     <h3 class="text-secondary">Rechercher un covoiturage autour de chez vous</h3>
     <q-list>
       <q-list-header>Votre recherche</q-list-header>
@@ -27,7 +28,8 @@
         markers: [],
         place: null,
         address: '',
-        location: ''
+        location: '',
+        terms: ''
       }
     },
     description: 'Autocomplete Example (#164)',

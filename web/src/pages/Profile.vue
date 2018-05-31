@@ -128,10 +128,8 @@
 </template>
 
 <script>
-import QItemMain from "quasar-framework/src/components/list/QItemMain";
 export default {
   name: 'Profile',
-  components: {QItemMain},
   data() {
     return {
       phone: '06 49 45 56 32',

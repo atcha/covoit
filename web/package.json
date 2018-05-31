@@ -15,6 +15,7 @@
     "ban-geocode": "^1.0.0",
     "chart.js": "^2.7.2",
     "quasar-framework": "0.16.0",
+    "vue-chartjs": "^3.3.1",
     "vue-resource": "^1.5.0",
     "vue2-google-maps": "^0.9.6"
   },
