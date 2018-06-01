@@ -8,8 +8,9 @@
 export default {
   name: 'App',
   mounted() {
-    if(this.$q.cookies.get('covoit_cookie')) {
-      this.userCookie = this.$q.cookies.get('covoit_cookie')
+    const userCookie = this.$q.cookies.get('covoit_cookie');
+    if(userCookie) {
+      this.userCookie = userCookie
     } else {
       this.$router.push('/login')
     }

@@ -10,8 +10,23 @@ export default {
     },
     registerService: (app) => {
         LOGGER.info("registering users service");
+
+        app.get('/users/current', (req, res) => {
+            LOGGER.debug(`GET /users`);
+            if(!req.user){
+                res.status(401).send("Il faut être connecté pour utiliser cette fonctionnalitée");
+                return;
+            }
+            res.send(req.user);
+        });
+
         app.get('/users/:id', (req, res) => {
             LOGGER.debug(`GET /users/${req.params.id}`);
+            if(!req.user){
+                res.status(401).send("Il faut être connecté pour utiliser cette fonctionnalitée");
+                return;
+            }
+
             let requestedUser = this.getUser(req.params.id);
             if (requestedUser) {
                 res.send(requestedUser);
@@ -22,11 +37,22 @@ export default {
 
         app.get('/users', (req, res) => {
             LOGGER.debug(`GET /users`);
+            if(!req.user){
+                res.status(401).send("Il faut être connecté pour utiliser cette fonctionnalitée");
+                return;
+            }
+
             res.send(DeployDB.getUsers().data);
         });
 
+
         app.post('/users', (req, res) => {
             LOGGER.debug(`POST /users`, req.body, '<-');
+            if(!req.user){
+                res.status(401).send("Il faut être connecté pour utiliser cette fonctionnalitée");
+                return;
+            }
+
             if (!req.body.id) {
                 res.send('Il faut au minimum un id pour enregistrer un utilisateur');
             } else {
@@ -41,6 +67,11 @@ export default {
 
         app.put('/users', (req, res) => {
             LOGGER.debug(`PUT /users`, req.body);
+            if(!req.user){
+                res.status(401).send("Il faut être connecté pour utiliser cette fonctionnalitée");
+                return;
+            }
+
             if (!DeployDB.getUsers().data.find((user) => user.id === req.body.id)) {
                 res.send(`id ${req.body.id} introuvable.`, 400);
             } else {

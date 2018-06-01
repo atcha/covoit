@@ -4,7 +4,7 @@
       <div class="avatar-container">
         <img src="../assets/avatar.jpeg" height="140" width="140"/>
       </div>
-      <h3 class="text-white">Laurent BRUN</h3>
+      <h3 class="text-white">{{this.user.displayName}}</h3>
     </div>
     <q-tabs>
       <q-tab default slot="title" label="INFOS" name="tab-infos"/>
@@ -19,7 +19,7 @@
               <q-icon name="phone_android"/>
             </q-item-side>
             <q-item-main>
-              <q-item-tile sublabel>{{ phone }}</q-item-tile>
+              <q-item-tile sublabel>{{ user.phone }}</q-item-tile>
             </q-item-main>
           </q-item>
           <q-item>
@@ -27,7 +27,7 @@
               <q-icon name="email"/>
             </q-item-side>
             <q-item-main>
-              <q-item-tile sublabel>{{ email }}</q-item-tile>
+              <q-item-tile sublabel>{{ user.email }}</q-item-tile>
             </q-item-main>
           </q-item>
           <q-item>
@@ -35,7 +35,7 @@
               <q-icon name="bookmark"/>
             </q-item-side>
             <q-item-main>
-              <q-item-tile sublabel>{{ address }}</q-item-tile>
+              <q-item-tile sublabel v-if="user.address">{{ user.address.label }}</q-item-tile>
             </q-item-main>
             <q-item-side right>
               <q-btn
@@ -44,7 +44,8 @@
                 icon="bookmark"
                 @click="enterContacts"
               />
-              <q-modal v-model="openedContacts">
+              <q-modal v-model="openedContacts"
+                       :content-css="{minWidth: '60vw', minHeight: '60vh', padding:'1em'}">
                 <q-list>
                   <q-list-header>
                     Vos coordonnées
@@ -52,10 +53,22 @@
                   <q-item-separator/>
                   <q-item>
                     <q-item-side>
+                      <q-icon name="account_box"/>
+                    </q-item-side>
+                    <q-item-main>
+                      <q-item-tile sublabel>
+                        <q-input v-model="tempUser.displayName"/>
+                      </q-item-tile>
+                    </q-item-main>
+                  </q-item>
+                  <q-item>
+                    <q-item-side>
                       <q-icon name="phone_android"/>
                     </q-item-side>
                     <q-item-main>
-                      <q-item-tile sublabel><q-input v-model="phone"/></q-item-tile>
+                      <q-item-tile sublabel>
+                        <q-input v-model="tempUser.phone"/>
+                      </q-item-tile>
                     </q-item-main>
                   </q-item>
                   <q-item>
@@ -63,7 +76,9 @@
                       <q-icon name="email"/>
                     </q-item-side>
                     <q-item-main>
-                      <q-item-tile sublabel><q-input v-model="email"/></q-item-tile>
+                      <q-item-tile sublabel>
+                        <q-input type="email" v-model="tempUser.email"/>
+                      </q-item-tile>
                     </q-item-main>
                   </q-item>
                   <q-item>
@@ -71,17 +86,34 @@
                       <q-icon name="bookmark"/>
                     </q-item-side>
                     <q-item-main>
-                      <q-item-tile sublabel><q-input v-model="address"/></q-item-tile>
+                      <q-item-tile sublabel>
+                        <!--<q-input v-model="address"/>-->
+                        <!-- Adds a separator between results -->
+                        <q-search v-model="terms" class="full-width">
+                          <q-autocomplete
+                            separator
+                            @search="search"
+                            @selected="selected"
+                          />
+                        </q-search>
+                      </q-item-tile>
                     </q-item-main>
                   </q-item>
                   <q-item-separator/>
                   <q-item>
                     <q-item-main>
-                      <q-btn
-                        color="primary"
-                        @click="openedContacts = false"
-                        label="Close"
-                      />
+                      <q-item-side right>
+                        <q-btn
+                          color="primary"
+                          @click="annuler"
+                          label="Annuler"
+                        />
+                        <q-btn
+                          color="secondary"
+                          @click="sauvegarder"
+                          label="Sauvegarder"
+                        />
+                      </q-item-side>
                     </q-item-main>
                   </q-item>
                 </q-list>
@@ -185,11 +217,17 @@
     components: {},
     data() {
       return {
-        phone: '06 49 45 56 32',
-        email: 'test@test.com',
-        address: '32 rue des bateaux 75001 Paris',
+        user : {
+          phone: '06 49 45 56 32',
+          email: 'test@test.com',
+          address: {
+            label :'32 rue des bateaux 75001 Paris'
+          },
+        },
+        terms : null,
+        tempUser : {},
         car: '',
-        openedContacts: false
+        openedContacts: false,
       }
     },
     methods: {
@@ -209,8 +247,37 @@
       },
       enterContacts() {
         this.openedContacts = true;
+        this.tempUser = {...this.user};
+        this.terms = this.user.address.label;
+      },
+      search (terms, done) {
+        this.$http.get('/api/geocode/address/' + terms).then(response => {
+          done(this.parseAddress(response.body))
+        })
+      },
+      selected (terms) {
+        this.tempUser.address = terms;
+      },
+      parseAddress(addresses) {
+        return addresses.map(address => {
+          return {
+            label: address.properties.label,
+            value: address.properties.label,
+            coordinates: address.geometry.coordinates
+          }
+        })
+      },
+      annuler(){
+        this.openedContacts = false;
+      },
+      sauvegarder(){
+        this.openedContacts = false;
+        this.user = {...this.tempUser};
+        this.$http.put('/api/users', this.user);
       }
-
+    },
+    mounted(){
+      this.$http.get('/api/users/current').then((user) => this.user = user.body);
     }
   }
 </script>
