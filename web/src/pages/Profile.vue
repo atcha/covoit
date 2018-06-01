@@ -110,7 +110,7 @@
                         />
                         <q-btn
                           color="secondary"
-                          @click="sauvegarder"
+                          @click="sauvegarder(tempUser)"
                           label="Sauvegarder"
                         />
                       </q-item-side>
@@ -127,10 +127,10 @@
           </q-list-header>
           <q-item>
             <q-item-main>
-              <q-item-tile v-if="car" sublabel>{{ car }}</q-item-tile>
+              <q-item-tile v-if="user.car" sublabel>{{ user.car }}</q-item-tile>
             </q-item-main>
-            <q-item-side v-if="car" right>
-              <q-btn v-if="car"
+            <q-item-side v-if="user.car" right>
+              <q-btn v-if="user.car"
                      color="secondary"
                      label="Modifier"
                      icon="directions_car"
@@ -217,16 +217,16 @@
     components: {},
     data() {
       return {
-        user : {
+        user: {
           phone: '06 49 45 56 32',
           email: 'test@test.com',
           address: {
-            label :'32 rue des bateaux 75001 Paris'
+            label: '32 rue des bateaux 75001 Paris'
           },
+          car: null
         },
-        terms : null,
-        tempUser : {},
-        car: '',
+        terms: null,
+        tempUser: {},
         openedContacts: false,
       }
     },
@@ -238,11 +238,12 @@
           ok: 'Valider',
           cancel: 'Annuler',
           prompt: {
-            model: this.car,
+            model: this.user.car,
             type: 'text' // optional
           }
         }).then(data => {
-          this.car = data
+          this.user.car = data
+          this.sauvegarder(this.user);
         })
       },
       enterContacts() {
@@ -250,12 +251,12 @@
         this.tempUser = {...this.user};
         this.terms = this.user.address.label;
       },
-      search (terms, done) {
+      search(terms, done) {
         this.$http.get('/api/geocode/address/' + terms).then(response => {
           done(this.parseAddress(response.body))
         })
       },
-      selected (terms) {
+      selected(terms) {
         this.tempUser.address = terms;
       },
       parseAddress(addresses) {
@@ -267,16 +268,16 @@
           }
         })
       },
-      annuler(){
+      annuler() {
         this.openedContacts = false;
       },
-      sauvegarder(){
+      sauvegarder(user) {
         this.openedContacts = false;
-        this.user = {...this.tempUser};
+        this.user = {...user};
         this.$http.put('/api/users', this.user);
       }
     },
-    mounted(){
+    mounted() {
       this.$http.get('/api/users/current').then((user) => this.user = user.body);
     }
   }
