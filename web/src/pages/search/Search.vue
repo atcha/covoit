@@ -17,7 +17,7 @@
       </q-item>
       <q-item-separator/>
       <q-item v-if="userStore && userStore.user && userStore.user.address && userStore.user.address.label">
-        <q-btn color="secondary" @click="launchUserSearch">Utiliser votre adresse : {{userStore.user.address.label}}</q-btn>
+        <q-btn color="secondary" @click="launchUserSearch">Utiliser votre adresse de référence : {{userStore.user.address.label}}</q-btn>
       </q-item>
     </q-list>
   </q-page>

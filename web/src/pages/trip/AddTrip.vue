@@ -14,6 +14,12 @@
           />
         </q-search>
       </q-item>
+      <q-item-separator/>
+      <q-item v-if="userStore && userStore.user && userStore.user.address && userStore.user.address.label">
+        <q-btn color="secondary" @click="launchUserSearch">Utiliser votre adresse de référence :
+          {{userStore.user.address.label}}
+        </q-btn>
+      </q-item>
       <q-item-separator v-show="locationSelected"/>
       <q-item v-show="locationSelected">
         <q-datetime
@@ -74,6 +80,8 @@
 </template>
 
 <script>
+  import UsersStore from "../../store/UsersStore";
+
   export default {
     name: 'AddTrip',
     data() {
@@ -84,16 +92,21 @@
         timeModalOpened: false,
         goTime: "",
         backTime: "",
-        days: []
+        days: ['lundi',
+          'mardi',
+          'mercredi',
+          'jeudi',
+          'vendredi'],
+        userStore: UsersStore
       }
     },
     methods: {
-      search (terms, done) {
+      search(terms, done) {
         this.$http.get('/api/geocode/address/' + terms).then(response => {
           done(this.parseAddress(response.body))
         })
       },
-      selected (terms) {
+      selected(terms) {
         this.location = terms
         this.locationSelected = true
       },
@@ -108,9 +121,13 @@
       },
       toggleDays(day) {
         this.days.push(day);
+      },
+      launchUserSearch() {
+        this.selected(this.userStore.user.address);
+        this.terms = this.userStore.user.address.label;
       }
     },
-    mounted () {
+    mounted() {
     }
   }
 </script>
