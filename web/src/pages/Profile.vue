@@ -2,7 +2,7 @@
   <q-page>
     <div class="profile-header column justify-center items-center">
       <div class="avatar-container">
-        <img src="../assets/avatar.jpeg" height="140" width="140"/>
+        <img :src="user.pic" height="140" width="140"/>
       </div>
       <h3 class="text-white">{{this.user.displayName}}</h3>
     </div>
@@ -53,11 +53,29 @@
                   <q-item-separator/>
                   <q-item>
                     <q-item-side>
+                      <q-icon name="face"/>
+                    </q-item-side>
+                    <q-item-main>
+                      <q-item-tile sublabel>
+                        <q-uploader
+                          ref="uploader"
+                          float-label="Changer votre image de profil"
+                          @add="addImage"
+                          url=""
+                          :hide-upload-button="true"
+                          :hide-upload-progress="true"
+                          :auto-expand="true"
+                          :extensions="'.gif,.jpg,.jpeg,.png'"/>
+                      </q-item-tile>
+                    </q-item-main>
+                  </q-item>
+                  <q-item>
+                    <q-item-side>
                       <q-icon name="account_box"/>
                     </q-item-side>
                     <q-item-main>
                       <q-item-tile sublabel>
-                        <q-input v-model="tempUser.displayName"/>
+                        <q-input float-label="Nom d'affichage" v-model="tempUser.displayName"/>
                       </q-item-tile>
                     </q-item-main>
                   </q-item>
@@ -67,7 +85,7 @@
                     </q-item-side>
                     <q-item-main>
                       <q-item-tile sublabel>
-                        <q-input v-model="tempUser.phone"/>
+                        <q-input float-label="Téléphone" v-model="tempUser.phone"/>
                       </q-item-tile>
                     </q-item-main>
                   </q-item>
@@ -77,7 +95,7 @@
                     </q-item-side>
                     <q-item-main>
                       <q-item-tile sublabel>
-                        <q-input type="email" v-model="tempUser.email"/>
+                        <q-input float-label="E-mail" type="email" v-model="tempUser.email"/>
                       </q-item-tile>
                     </q-item-main>
                   </q-item>
@@ -89,7 +107,7 @@
                       <q-item-tile sublabel>
                         <!--<q-input v-model="address"/>-->
                         <!-- Adds a separator between results -->
-                        <q-search v-model="terms" class="full-width">
+                        <q-search float-label="Adresse" v-model="terms" class="full-width">
                           <q-autocomplete
                             separator
                             @search="search"
@@ -212,16 +230,18 @@
 
 <script>
 
+  import UsersStore from "../store/UsersStore";
+
   export default {
     name: 'Profile',
     components: {},
     data() {
       return {
         user: {
-          phone: '06 49 45 56 32',
-          email: 'test@test.com',
+          phone: '',
+          email: '',
           address: {
-            label: '32 rue des bateaux 75001 Paris'
+            label: ''
           },
           car: null
         },
@@ -274,11 +294,32 @@
       sauvegarder(user) {
         this.openedContacts = false;
         this.user = {...user};
-        this.$http.put('/api/users', this.user);
+        this.$http.put('/api/users', this.user).then(() => {
+          UsersStore.getUser(this.$http,true);
+        });
+      },
+      async addImage(files) {
+        if(files[0].size < 10000) {
+          this.tempUser.pic = await this.getBase64(files[0]);
+        }else{
+          this.$refs.uploader.reset();
+          this.$q.dialog({
+            title : 'Image',
+            message : 'Votre image est trop lourde, veuillez ajouter une image d\'un poid inférieur à 10 ko'
+          });
+        }
+      },
+      getBase64(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = error => reject(error);
+        });
       }
     },
     mounted() {
-      this.$http.get('/api/users/current').then((user) => this.user = user.body);
+      UsersStore.getUser(this.$http).then((user) => this.user = user);
     }
   }
 </script>

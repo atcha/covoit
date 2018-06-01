@@ -69,7 +69,7 @@
       }
     },
     mounted() {
-      this.routes.sort(this.compare);
+      // this.routes.sort(this.compare);
 
       console.log(this.routes)
       let lastDeparture = null

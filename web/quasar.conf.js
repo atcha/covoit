@@ -89,7 +89,9 @@ module.exports = function (ctx) {
         'QField',
         'QPopover',
         'QTimeline',
-        'QTimelineEntry'
+        'QTimelineEntry',
+        'QUploader',
+        'QTooltip'
       ],
       directives: [
         'Ripple',
