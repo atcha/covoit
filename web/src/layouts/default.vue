@@ -13,14 +13,12 @@
           {{title}}
           <div slot="subtitle">{{ subTitle }}</div>
         </q-toolbar-title>
-        <q-side right v-if="userStore.user">
-          <span class="avatar" >
-            <img :src="userStore.user.pic" height="30" width="30">
-            <q-tooltip>
-              {{userStore.user.displayName}}
-            </q-tooltip>
-          </span>
-        </q-side>
+        <span class="avatar" v-if="userStore.user">
+          <img :src="userStore.user.pic" height="30" width="30">
+          <q-tooltip>
+            {{userStore.user.displayName}}
+          </q-tooltip>
+        </span>
         <q-btn flat dense icon="fas fa-sign-out-alt" to="/logout"/>
       </q-toolbar>
     </q-layout-header>
@@ -96,7 +94,7 @@
 </script>
 
 <style scoped>
-  .avatar img{
-    border-radius:50%;
+  .avatar img {
+    border-radius: 50%;
   }
 </style>

@@ -15,11 +15,17 @@
           />
         </q-search>
       </q-item>
+      <q-item-separator/>
+      <q-item v-if="userStore && userStore.user && userStore.user.address && userStore.user.address.label">
+        <q-btn color="secondary" @click="launchUserSearch">Utiliser votre adresse : {{userStore.user.address.label}}</q-btn>
+      </q-item>
     </q-list>
   </q-page>
 </template>
 
 <script>
+
+  import UsersStore from '../../store/UsersStore';
 
   export default {
     name: 'Search',
@@ -29,7 +35,8 @@
         place: null,
         address: '',
         location: '',
-        terms: ''
+        terms: '',
+        userStore: UsersStore
       }
     },
     description: 'Autocomplete Example (#164)',
@@ -67,9 +74,11 @@
           })
           this.place = null;
         }
+      },
+      launchUserSearch(){
+        this.selected(this.userStore.user.address);
       }
     }
-
   }
 </script>
 
