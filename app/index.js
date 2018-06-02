@@ -1,6 +1,7 @@
 import LOGGER from './utils/logger';
 import GeocodingService from './geocoding/geocoding.service';
 import UsersService from './users/users.service';
+import TripsService from './trips/trips.service';
 import LoginFacebookService from './login/loginFacebook.service';
 import LoginGoogleService from './login/loginGoogle.service';
 import LoginLdapService from './login/loginLdap.service';
@@ -48,6 +49,7 @@ DeployDb.init().then(() => {
 
     GeocodingService.registerService(app);
     UsersService.registerService(app);
+    TripsService.registerService(app);
     LoginFacebookService.registerService(app);
     LoginFacebookService.registerStrategy();
     LoginGoogleService.registerService(app);

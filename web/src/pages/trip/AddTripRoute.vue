@@ -155,6 +155,7 @@
             return line
           },
           validateRoute() {
+            console.log(this.selectedRoute);
             this.validateOpened = true
           }
         }

@@ -58,7 +58,7 @@ export default {
             } else {
                 if (!DeployDB.getUsers().data.find((user) => user.id === req.body.id)) {
                     this.createUser(req.body);
-                    res.send(DeployDB.getUsers().data.find((user) => user.id === req.params.id));
+                    res.send(DeployDB.getUsers().data.find((user) => user.id === req.body.id));
                 } else {
                     res.send(`id ${req.body.id} déjà utilisé.`, 400);
                 }
@@ -76,7 +76,7 @@ export default {
                 res.send(`id ${req.body.id} introuvable.`, 400);
             } else {
                 DeployDB.save(DeployDB.getUsers(), req.body);
-                res.send(DeployDB.getUsers().data.find((user) => user.id === req.params.id));
+                res.send(DeployDB.getUsers().data.find((user) => user.id === req.body.id));
             }
         });
 

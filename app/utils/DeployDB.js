@@ -7,13 +7,14 @@ class DeployDB {
     constructor() {
         //Collections
         this.usersCollection = 'users';
+        this.tripsCollection = 'trips';
         const path = `${process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME']}\\AppData\\Roaming\\npm\\covoit.db`;
         this.db = new LokiJs(path);
     }
 
 
     createIfNotExist(name) {
-        LOGGER.debug(`CreateIfNotExist : ${name}`);
+        LOGGER.info(`Initialize db : ${name}`);
         if (!this.db.getCollection(name)) {
             this.db.addCollection(name);
             this.db.saveDatabase();
@@ -24,6 +25,7 @@ class DeployDB {
         return new Promise((success) => {
             this.db.loadDatabase({}, () => {
                 this.createIfNotExist(this.usersCollection);
+                this.createIfNotExist(this.tripsCollection);
                 success(this.db);
             });
         });
@@ -31,6 +33,10 @@ class DeployDB {
 
     getUsers() {
         return this.db.getCollection(this.usersCollection);
+    }
+
+    getTrips() {
+        return this.db.getCollection(this.tripsCollection);
     }
 
     insert(collection, item) {
