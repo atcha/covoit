@@ -91,7 +91,8 @@ module.exports = function (ctx) {
         'QTimeline',
         'QTimelineEntry',
         'QUploader',
-        'QTooltip'
+        'QTooltip',
+        'QChatMessage'
       ],
       directives: [
         'Ripple',

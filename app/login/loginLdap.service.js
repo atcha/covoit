@@ -63,13 +63,13 @@ export default {
             app.post('/login', function(req,res){
                 passport.authenticate('ldapauth', {session: true})(req,res,() => {
                     LOGGER.info("LDAP get User ", req.body.login);
-                    let userFromBase = UserService.getUser(req.body.login);
+                    let userFromBase = UserService.getUserFromDb(req.body.login);
                     if (!userFromBase) {
                         userFromBase = {
                             id : req.body.login,
                             displayName :req.body.login
                         };
-                        UserService.createUser(userFromBase);
+                        UserService.createUserIntoDb(userFromBase);
                     }
                     req.logIn(userFromBase, function (err) {
                         if (err) {

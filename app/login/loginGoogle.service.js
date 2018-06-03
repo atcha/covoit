@@ -35,9 +35,9 @@ export default {
                 },
                 function (accessToken, refreshToken, profile, done) {
                     LOGGER.debug("GetOrCreate Google user", profile.displayName, profile.id);
-                    const user = UserService.getUser(profile.id);
+                    const user = UserService.getUserFromDb(profile.id);
                     if (!user) {
-                        UserService.createUser(profile);
+                        UserService.createUserIntoDb(profile);
                     }
                     done(null, user);
                 }

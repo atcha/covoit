@@ -43,13 +43,13 @@ DeployDb.init().then(() => {
 
     passport.deserializeUser(function(userId, done) {
         LOGGER.debug("deserializeUser",userId);
-        done(null, UsersService.getUser(userId));
+        done(null, UsersService.getUserFromDb(userId));
     });
 
 
     GeocodingService.registerService(app);
-    UsersService.registerService(app);
-    TripsService.registerService(app);
+    new UsersService(app);
+    new TripsService(app);
     LoginFacebookService.registerService(app);
     LoginFacebookService.registerStrategy();
     LoginGoogleService.registerService(app);

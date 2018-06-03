@@ -58,6 +58,13 @@
           label="Profil"
           slot="title"
         />
+        <q-route-tab
+          icon="chat"
+          to="/chat"
+          exact
+          label="Chat"
+          slot="title"
+        />
       </q-tabs>
       <!--<q-toolbar class="row justify-between">-->
 

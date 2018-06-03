@@ -38,6 +38,10 @@ export default [
       {
         path: '/profile',
         component: () => import('pages/Profile')
+      },
+      {
+        path: '/chat',
+        component: () => import('pages/chat/Chat')
       }
     ],
   },
