@@ -6,19 +6,19 @@
         name="me"
         :text="['Sunday, 19th']"
         stamp="5 minutes ago"
-        sent
+        :sent="true"
       />
       <q-chat-message
         :text="['Sunday, 19th']"
         name="Other 1"
         stamp="4 minutes ago"
-        receive
+        :sent="false"
       />
       <q-chat-message
         name="me"
-        :text="['Sunday, 19th']"
+        :text="['This is a ','multiples messages testt']"
         stamp="1 minutes ago"
-        sent
+        :sent="true"
       />
     </q-page>
   </q-page>
