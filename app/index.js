@@ -8,6 +8,9 @@ import LoginLdapService from './login/loginLdap.service';
 import Login from './login/login.service';
 import DeployDb from './utils/DeployDB';
 import bodyParser from 'body-parser';
+import WebSocket from 'ws';
+import http from 'http';
+import CovoitWebSocket from "./webSocket/CovoitWebSocket";
 
 LOGGER.info("Starting server...");
 
@@ -15,6 +18,9 @@ LOGGER.info("Starting server...");
 const express = require('express'),
     app = express(),
     port = process.env.PORT || 3000;
+
+const server = http.createServer(app);
+const wsServer = new WebSocket.Server({server});
 
 app.use(bodyParser.json()); // for parsing application/json
 
@@ -26,7 +32,7 @@ app.use(expressSession({
     name: 'covoit_cookie',
     proxy: true,
     resave: true,
-    cookie: { httpOnly: false },
+    cookie: {httpOnly: false},
     saveUninitialized: true
 }));
 
@@ -37,12 +43,12 @@ app.use(passport.session());
 DeployDb.init().then(() => {
     LOGGER.info("db initialized");
 
-    passport.serializeUser(function(user, done) {
+    passport.serializeUser(function (user, done) {
         done(null, user.id);
     });
 
-    passport.deserializeUser(function(userId, done) {
-        LOGGER.debug("deserializeUser",userId);
+    passport.deserializeUser(function (userId, done) {
+        LOGGER.debug("deserializeUser", userId);
         done(null, UsersService.getUserFromDb(userId));
     });
 
@@ -57,10 +63,10 @@ DeployDb.init().then(() => {
     LoginLdapService.registerService(app);
     LoginLdapService.registerStrategy();
     Login.registerService(app);
+    new CovoitWebSocket(wsServer);
 });
 
 
-
-app.listen(port, function () {
+server.listen(port, function () {
     LOGGER.info(`Server started and listening on port ${port}!`);
 });

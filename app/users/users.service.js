@@ -61,7 +61,7 @@ export default class UsersService {
 
 
     editUser(req, res) {
-        LOGGER.debug(`PUT /users`, req.body);
+        LOGGER.debug(`PUT /users`);
         SecurityUtils.authenticatedFilter(req, res);
 
         if (!DeployDB.getUsers().data.find((user) => user.id === req.body.id)) {
