@@ -14,6 +14,8 @@ export default {
     } else {
       this.$router.push('/login')
     }
+
+    console.log(this.$q.cookies.all())
   }
 }
 </script>

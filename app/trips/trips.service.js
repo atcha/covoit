@@ -1,17 +1,17 @@
 import LOGGER from '../utils/logger';
 import DeployDB from "../utils/DeployDB";
-import SecurityUtils from "../utils/SecurityUtils";
+import {authenticated} from "../utils/SecurityUtils";
 
 export default class TripsService {
 
     constructor(app) {
         LOGGER.info("registering trips service");
 
-        app.get('/trips/users/current', this.getTripOfCurrentUser);
-        app.get('/trips/:id', this.getTripById);
-        app.get('/trips', this.getAllTrips);
-        app.post('/trips', this.createTrip);
-        app.put('/trips', this.updateTrip);
+        app.get('/trips/users/current', this.getTripOfCurrentUser.bind(this));
+        app.get('/trips/:id', this.getTripById.bind(this));
+        app.get('/trips', this.getAllTrips.bind(this));
+        app.post('/trips', this.createTrip.bind(this));
+        app.put('/trips', this.updateTrip.bind(this));
     }
 
     getByUserIdFromDb(id) {
@@ -26,15 +26,15 @@ export default class TripsService {
         DeployDB.save(DeployDB.getTrips(), trip);
     }
 
+    @authenticated
     getTripOfCurrentUser(req, res) {
         LOGGER.debug(`GET /users`);
-        SecurityUtils.authenticatedFilter(req,res);
         res.send(this.getByUserIdFromDb(req.user.id));
     }
 
+    @authenticated
     getTripById(req, res) {
         LOGGER.debug(`GET /trips/${req.params.id}`);
-        SecurityUtils.authenticatedFilter(req,res);
         const requestedTrip = this.getTripFromDb(req.params.id);
         if (requestedTrip) {
             res.send(requestedTrip);
@@ -43,24 +43,22 @@ export default class TripsService {
         }
     }
 
+    @authenticated
     getAllTrips(req, res) {
         LOGGER.debug(`GET /trips`);
-        SecurityUtils.authenticatedFilter(req,res);
-
         res.send(DeployDB.getTrips().data);
     }
 
+    @authenticated
     createTrip(req, res) {
         LOGGER.debug(`POST /trips`, req.body, '<-');
-        SecurityUtils.authenticatedFilter(req,res);
-
         this.createTripToDb(req.body);
         res.send(req.body);
     }
 
+    @authenticated
     updateTrip(req, res) {
         LOGGER.debug(`PUT /trips`, req.body);
-        SecurityUtils.authenticatedFilter(req,res);
 
         if (!DeployDB.getTrips().data.find((trip) => trip.$loki === req.body.$loki)) {
             res.send(`id trip : ${req.body.$loki} introuvable.`, 400);

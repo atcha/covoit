@@ -1,31 +1,29 @@
 import LOGGER from '../utils/logger';
 import DeployDB from "../utils/DeployDB";
-import SecurityUtils from "../utils/SecurityUtils";
+import SecurityUtils, {authenticated} from "../utils/SecurityUtils";
 
 export default class UsersService {
 
     constructor(app) {
         LOGGER.info("registering users service");
 
-        app.get('/users/current', this.getCurrentUser);
-        app.get('/users/:id', this.getUserById);
-        app.get('/users', this.getAllUsers);
-        app.post('/users', this.createUser);
-        app.put('/users', this.editUser);
+        app.get('/users/current', this.getCurrentUser.bind(this));
+        app.get('/users/:id', this.getUserById.bind(this));
+        app.get('/users', this.getAllUsers.bind(this));
+        app.post('/users', this.createUser.bind(this));
+        app.put('/users', this.editUser.bind(this));
 
     }
 
+    @authenticated
     getCurrentUser(req, res) {
-        LOGGER.debug(`GET /users`);
-        SecurityUtils.authenticatedFilter(req, res);
+        LOGGER.debug(`GET /users/current`);
         res.send(req.user);
     }
 
-
+    @authenticated
     getUserById(req, res) {
         LOGGER.debug(`GET /users/${req.params.id}`);
-        SecurityUtils.authenticatedFilter(req, res);
-
         let requestedUser = this.getUserFromDb(req.params.id);
         if (requestedUser) {
             res.send(requestedUser);
@@ -34,19 +32,15 @@ export default class UsersService {
         }
     }
 
-
+    @authenticated
     getAllUsers(req, res) {
         LOGGER.debug(`GET /users`);
-        SecurityUtils.authenticatedFilter(req, res);
-
         res.send(DeployDB.getUsers().data);
     }
 
-
+    @authenticated
     createUser(req, res) {
         LOGGER.debug(`POST /users`, req.body, '<-');
-        SecurityUtils.authenticatedFilter(req, res);
-
         if (!req.body.id) {
             res.send('Il faut au minimum un id pour enregistrer un utilisateur');
         } else {
@@ -59,11 +53,9 @@ export default class UsersService {
         }
     }
 
-
+    @authenticated
     editUser(req, res) {
         LOGGER.debug(`PUT /users`);
-        SecurityUtils.authenticatedFilter(req, res);
-
         if (!DeployDB.getUsers().data.find((user) => user.id === req.body.id)) {
             res.send(`id ${req.body.id} introuvable.`, 400);
         } else {
