@@ -1,6 +1,6 @@
 import LOGGER from '../utils/logger';
 import DeployDB from "../utils/DeployDB";
-import SecurityUtils, {authenticated} from "../utils/SecurityUtils";
+import {authenticated} from "../utils/SecurityUtils";
 
 export default class UsersService {
 
