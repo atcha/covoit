@@ -48,12 +48,11 @@ DeployDb.init().then(() => {
     });
 
     passport.deserializeUser(function (userId, done) {
-        LOGGER.debug("deserializeUser", userId);
         done(null, UsersService.getUserFromDb(userId));
     });
 
 
-    GeocodingService.registerService(app);
+    new GeocodingService(app);
     new UsersService(app);
     new TripsService(app);
     LoginFacebookService.registerService(app);

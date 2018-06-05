@@ -1,6 +1,7 @@
 import LOGGER from '../utils/logger';
 import DeployDB from "../utils/DeployDB";
 import {authenticated} from "../utils/SecurityUtils";
+import {logCalls} from "../utils/loggerUtils";
 
 export default class TripsService {
 
@@ -27,14 +28,14 @@ export default class TripsService {
     }
 
     @authenticated
+    @logCalls
     getTripOfCurrentUser(req, res) {
-        LOGGER.debug(`GET /users`);
         res.send(this.getByUserIdFromDb(req.user.id));
     }
 
     @authenticated
+    @logCalls
     getTripById(req, res) {
-        LOGGER.debug(`GET /trips/${req.params.id}`);
         const requestedTrip = this.getTripFromDb(req.params.id);
         if (requestedTrip) {
             res.send(requestedTrip);
@@ -44,22 +45,21 @@ export default class TripsService {
     }
 
     @authenticated
+    @logCalls
     getAllTrips(req, res) {
-        LOGGER.debug(`GET /trips`);
         res.send(DeployDB.getTrips().data);
     }
 
     @authenticated
+    @logCalls
     createTrip(req, res) {
-        LOGGER.debug(`POST /trips`, req.body, '<-');
         this.createTripToDb(req.body);
         res.send(req.body);
     }
 
     @authenticated
+    @logCalls
     updateTrip(req, res) {
-        LOGGER.debug(`PUT /trips`, req.body);
-
         if (!DeployDB.getTrips().data.find((trip) => trip.$loki === req.body.$loki)) {
             res.send(`id trip : ${req.body.$loki} introuvable.`, 400);
         } else {

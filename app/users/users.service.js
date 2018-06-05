@@ -1,6 +1,7 @@
 import LOGGER from '../utils/logger';
 import DeployDB from "../utils/DeployDB";
 import {authenticated} from "../utils/SecurityUtils";
+import {logCalls} from "../utils/loggerUtils";
 
 export default class UsersService {
 
@@ -16,14 +17,14 @@ export default class UsersService {
     }
 
     @authenticated
+    @logCalls
     getCurrentUser(req, res) {
-        LOGGER.debug(`GET /users/current`);
         res.send(req.user);
     }
 
     @authenticated
+    @logCalls
     getUserById(req, res) {
-        LOGGER.debug(`GET /users/${req.params.id}`);
         let requestedUser = this.getUserFromDb(req.params.id);
         if (requestedUser) {
             res.send(requestedUser);
@@ -33,14 +34,14 @@ export default class UsersService {
     }
 
     @authenticated
+    @logCalls
     getAllUsers(req, res) {
-        LOGGER.debug(`GET /users`);
         res.send(DeployDB.getUsers().data);
     }
 
     @authenticated
+    @logCalls
     createUser(req, res) {
-        LOGGER.debug(`POST /users`, req.body, '<-');
         if (!req.body.id) {
             res.send('Il faut au minimum un id pour enregistrer un utilisateur');
         } else {
@@ -54,8 +55,8 @@ export default class UsersService {
     }
 
     @authenticated
+    @logCalls
     editUser(req, res) {
-        LOGGER.debug(`PUT /users`);
         if (!DeployDB.getUsers().data.find((user) => user.id === req.body.id)) {
             res.send(`id ${req.body.id} introuvable.`, 400);
         } else {
