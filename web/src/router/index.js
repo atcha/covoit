@@ -32,6 +32,21 @@ const Router = new VueRouter({
   routes
 });
 
+function initWs() {
+  const BrowserWebSocket = require('browser-websocket');
+  const ws = new BrowserWebSocket('ws://localhost:3000', {
+    rejectUnauthorized: false
+  });
+
+  ws.on('open', () => {
+    ws.emit('register:');
+  });
+
+  ws.on('message', (e) => {
+    console.log("Message : ",e);
+  });
+}
+initWs();
 
 Vue.http.interceptors.push((request) => {
 

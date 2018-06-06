@@ -1,10 +1,12 @@
 import LOGGER from '../utils/logger';
+import {logCalls} from "../utils/loggerUtils";
+import {authenticated} from "../utils/SecurityUtils";
 // server
 
 let httpProxy;
 try {
     httpProxy = require('../proxy').httpProxy;
-}catch(e){
+} catch (e) {
     LOGGER.warn("No proxy loaded");
 }
 
@@ -13,23 +15,22 @@ const fetch = require("node-fetch"),
     API_URL = "https://api-adresse.data.gouv.fr";
 
 
-export default {
-    registerService: (app) => {
+export default class GeocodingService {
+    constructor(app) {
         LOGGER.info("registering geocoding service");
-        const query = q => {
-            const agentProxy = httpProxy || "";
-            return fetch(`${API_URL}/search/?q=${urlencode(q)}`, {agent: agentProxy}).then(x => x.json());
-        };
 
-        app.get('/geocode/address/:address', (req, res) => {
-            if(!req.user){
-                res.status(401).send("Il faut être connecté pour utiliser cette fonctionnalitée");
-                return;
-            }
-
-            LOGGER.debug(`[${req.user.displayName}] /geocode/address/${req.params.address}`);
-            query(req.params.address).then(json => res.send(json.features));
-        });
-
+        app.get('/geocode/address/:address', this.findAdress.bind(this));
     }
-};
+
+    query(q) {
+        const agentProxy = httpProxy || "";
+        return fetch(`${API_URL}/search/?q=${urlencode(q)}`, {agent: agentProxy}).then(x => x.json());
+    }
+
+
+    @authenticated
+    @logCalls
+    findAdress(req, res) {
+        this.query(req.params.address).then(json => res.send(json.features));
+    }
+}

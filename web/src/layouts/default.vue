@@ -52,17 +52,17 @@
           slot="title"
         />
         <q-route-tab
-          icon="account_circle"
-          to="/profile"
-          exact
-          label="Profil"
-          slot="title"
-        />
-        <q-route-tab
           icon="chat"
           to="/chat"
           exact
           label="Chat"
+          slot="title"
+        />
+        <q-route-tab
+          icon="account_circle"
+          to="/profile"
+          exact
+          label="Profil"
           slot="title"
         />
       </q-tabs>
