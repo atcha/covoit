@@ -135,7 +135,6 @@
                     </q-item-main>
                   </q-item>
                 </q-list>
-
               </q-modal>
             </q-item-side>
           </q-item>
