@@ -30,9 +30,9 @@
         <q-modal v-model="modalOpened" :content-css="{padding: '50px'}">
           <h4 class="text-primary">Détail du conducteur {{ userInfo.name }}</h4>
           <div>
-            <p><q-icon name="directions_car" />{{ userInfo.car }}</p>
-            <p><q-icon name="phone" />{{ userInfo.tel }}</p>
-            <p><q-icon name="bookmark" />{{ userInfo.address }}</p>
+            <p v-if="userInfo.car"><q-icon name="directions_car" />{{ userInfo.car }}</p>
+            <p v-if="userInfo.tel"><q-icon name="phone" />{{ userInfo.tel }}</p>
+            <p v-if="userInfo.address"><q-icon name="bookmark" />{{ userInfo.address }}</p>
           </div>
           <q-btn color="secondary" @click="modalOpened = false" label="Close" />
         </q-modal>
