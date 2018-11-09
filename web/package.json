@@ -12,13 +12,15 @@
     "dev": "quasar dev"
   },
   "dependencies": {
+    "@mapbox/mapbox-sdk": "^0.4.1",
     "ban-geocode": "^1.0.0",
+    "browser-websocket": "^2.2.0",
     "chart.js": "^2.7.2",
+    "mapbox-gl": "^0.51.0",
     "quasar-framework": "0.16.0",
     "vue-chartjs": "^3.3.1",
-    "vue-resource": "^1.5.0",
-    "vue2-google-maps": "^0.9.6",
-    "browser-websocket": "^2.2.0"
+    "vue-mapbox": "^0.0.34",
+    "vue-resource": "^1.5.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",

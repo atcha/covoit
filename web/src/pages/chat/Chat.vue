@@ -1,7 +1,7 @@
 <template>
   <q-page padding class="row justify-center">
-    <q-page style="width: 500px; max-width: 90vw;">
-      <div class="q-display-1 q-mb-md text-grey">Chat avec ton co-voiturage</div>
+    <q-page>
+      <h3 class="text-secondary">Chat avec ton co-voiturage</h3>
       <q-chat-message
         name="me"
         :text="['Sunday, 19th']"
