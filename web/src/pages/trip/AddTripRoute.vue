@@ -1,9 +1,6 @@
 <template>
   <q-page class="trip-add-route">
-    <mgl-map
-      :accessToken="pubAccessToken"
-      :mapStyle.sync="mapStyle"
-    />
+    <div id="map"></div>
     <q-list>
       <q-list-header>Sélectionnez votre itinéraire</q-list-header>
       <div v-for="(route, index) in routes.routes">
@@ -52,7 +49,7 @@
 
 <script>
   import secretMapBox from '../../secret/mapBox'
-  import {MglMap} from 'vue-mapbox'
+  import mapboxgl from 'mapbox-gl'
 
   export default {
     name: "AddTripRoute",
@@ -69,17 +66,26 @@
         validateOpened: false,
         pubAccessToken: secretMapBox.publicKey,
         PrivAccessToken: secretMapBox.privateKey,
-        mapStyle: 'mapbox://styles/mapbox/streets-v9',
-        coordinates: []
+        mapStyle: 'mapbox://styles/mapbox/streets-v10',
+        coordinates: [],
+        geoJsonSource: {},
+        mapCenter: [0.323584, 46.538796],
+        mapZoom: 11
       }
     },
     components: {
-      MglMap
     },
     mounted() {
       this.coordinates.push(this.$route.params.start[0]);
       this.coordinates.push(this.$route.params.start[1]);
       console.log(this.coordinates);
+      mapboxgl.accessToken = this.pubAccessToken
+      this.map = new mapboxgl.Map({
+        container: 'map',
+        style: this.mapStyle,
+        center: [0.323584, 46.538796],
+        zoom: 9,
+      });
       const mbxDirections = require('@mapbox/mapbox-sdk/services/directions');
       const directionsClient = mbxDirections({accessToken: this.PrivAccessToken});
       directionsClient
@@ -87,20 +93,48 @@
           waypoints: [
             {
               coordinates: this.coordinates,
-              approach: 'unrestricted'
+              approach: 'unrestricted',
             },
             {
-              coordinates: [46.538796, 0.323584],
-              approach: 'unrestricted'
+              coordinates: [0.323584, 46.538796],
+              approach: 'unrestricted',
             }
           ],
-          alternatives: true
+          alternatives: true,
+          overview: 'full',
+          geometries: 'geojson',
         })
         .send()
-        .then(response => {
+        .then((response) => {
           const directions = response.body;
           console.log(directions);
-        });
+          directions.routes.forEach((route, index) => {
+            this.geoJsonSource = route.geometry;
+            const layer = {
+              "id": "route"+index,
+              "type": "line",
+              "source": {
+                "type": "geojson",
+                "data": {
+                  "type": "Feature",
+                  "properties": {},
+                  "geometry": {}
+                }
+              },
+              "layout": {
+                "line-join": "round",
+                "line-cap": "round",
+              },
+              "paint": {
+                "line-color": "#888",
+                "line-width": 8,
+              }
+            }
+
+            layer.source.data.geometry = route.geometry;
+            this.map.addLayer(layer)
+          })
+        })
 
       // this.directionsService = new this.google.maps.DirectionsService();
       // this.$refs.routeMap.$mapPromise.then((map) => {
@@ -117,48 +151,6 @@
       '$route': 'calcRoute'
     },
     methods: {
-      mapLoaded(map) {
-        map.addLayer({
-          'id': 'points',
-          'type': 'symbol',
-          'source': {
-            'type': 'geojson',
-            'data': {
-              'type': 'FeatureCollection',
-              'features': [{
-                'type': 'Feature',
-                'geometry': {
-                  'type': 'Point',
-                  'coordinates': [-77.03238901390978, 38.913188059745586]
-                },
-                'properties': {
-                  'title': 'Mapbox DC',
-                  'icon': 'monument'
-                }
-              }, {
-                'type': 'Feature',
-                'geometry': {
-                  'type': 'Point',
-                  'coordinates': [-122.414, 37.776]
-                },
-                'properties': {
-                  'title': 'Mapbox SF',
-                  'icon': 'harbor'
-                }
-              }]
-            }
-          }
-        })
-      },
-      mapClicked(map, e) {
-        alert('Map Clicked!');
-      },
-      geolocateError(control, positionError) {
-        console.log(positionError);
-      },
-      geolocate(control, position) {
-        console.log(`User position: ${position.coords.latitude}, ${position.coords.longitude}`);
-      },
       calcRoute() {
         let start = this.$route.params.start
         let end = "Bois de Fief Clairet, 86240 Ligugé"

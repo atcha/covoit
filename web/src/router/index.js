@@ -4,12 +4,9 @@ import VueRouter from 'vue-router'
 import routes from './routes'
 import VueRessource from 'vue-resource'
 import { Dialog, Cookies } from 'quasar'
-import VueMapbox from 'vue-mapbox'
-import Mapbox from 'mapbox-gl'
 
 Vue.use(VueRouter)
 Vue.use(VueRessource)
-Vue.use(VueMapbox, { mapboxgl: Mapbox })
 
 
 const Router = new VueRouter({
